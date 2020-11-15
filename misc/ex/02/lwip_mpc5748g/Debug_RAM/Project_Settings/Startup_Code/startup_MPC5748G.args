@@ -1,0 +1,22 @@
+-c
+-I"C:/NXP/S32DS_Power_v2.1/S32DS/software/S32_SDK_S32PA_RTM_3.0.0/platform/devices"
+-I"C:/NXP/S32DS_Power_v2.1/S32DS/software/S32_SDK_S32PA_RTM_3.0.0/platform/devices/MPC5748G/include"
+-I"C:/NXP/S32DS_Power_v2.1/S32DS/software/S32_SDK_S32PA_RTM_3.0.0/platform/devices/MPC5748G/startup"
+-I"C:/NXP/S32DS_Power_v2.1/S32DS/software/S32_SDK_S32PA_RTM_3.0.0/platform/devices/MPC5748G"
+-I"C:/NXP/S32DS_Power_v2.1/S32DS/software/S32_SDK_S32PA_RTM_3.0.0/platform/devices/common"
+-I"C:/NXP/S32DS_Power_v2.1/S32DS/software/S32_SDK_S32PA_RTM_3.0.0/platform/drivers/inc"
+-I"C:/NXP/S32DS_Power_v2.1/S32DS/software/S32_SDK_S32PA_RTM_3.0.0/rtos/osif"
+-I"C:/Users/annko/workspaceS32DS.Power.2.1/lwip_mpc5748g/Generated_Code"
+-I"C:/Users/annko/workspaceS32DS.Power.2.1/lwip_mpc5748g/Sources"
+-x assembler-with-cpp
+-DTURN_ON_CPU0
+-DI_CACHE
+-DICACHE_ENABLE
+-DCPU_MPC5748G
+-g3
+-mcpu=e200z4
+-specs=nosys.specs
+-mbig
+-mvle
+-mregnames
+--sysroot="C:/NXP/S32DS_Power_v2.1/S32DS/build_tools/powerpc-eabivle-4_9/powerpc-eabivle/newlib"
