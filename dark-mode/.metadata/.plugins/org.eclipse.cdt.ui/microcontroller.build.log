@@ -1,0 +1,11 @@
+10:44:09 **** Incremental Build of configuration Debug_RAM for project microcontroller ****
+make -j2 all 
+Invoking: Standard S32DS Print Size
+powerpc-eabivle-size --format=berkeley microcontroller.elf
+   text	   data	    bss	    dec	    hex	filename
+  84274	  16672	  30656	 131602	  20212	microcontroller.elf
+Finished building: microcontroller.siz
+ 
+
+10:44:09 Build Finished (took 433ms)
+

@@ -1,0 +1,36 @@
+10:43:44 **** Incremental Build of configuration Debug_RAM for project microcontroller ****
+make -j2 all 
+Building file: ../Sources/main.c
+Invoking: Standard S32DS C Compiler
+powerpc-eabivle-gcc "@Sources/main.args" -MMD -MP -MF"Sources/main.d" -MT"Sources/main.o" -o "Sources/main.o" "../Sources/main.c"
+../Sources/main.c: In function 'sw4_RE_isr':
+../Sources/main.c:38:3: warning: implicit declaration of function 'printf' [-Wimplicit-function-declaration]
+   printf('waiting for connection');
+   ^
+../Sources/main.c:38:3: warning: incompatible implicit declaration of built-in function 'printf'
+../Sources/main.c:38:10: warning: character constant too long for its type
+   printf('waiting for connection');
+          ^
+../Sources/main.c:38:10: warning: passing argument 1 of 'printf' makes pointer from integer without a cast
+../Sources/main.c:38:10: note: expected 'const char *' but argument is of type 'int'
+Finished building: ../Sources/main.c
+ 
+Building target: microcontroller.elf
+Invoking: Standard S32DS C Linker
+powerpc-eabivle-gcc -o "microcontroller.elf" "@microcontroller.args"    
+Finished building target: microcontroller.elf
+ 
+Invoking: Standard S32DS Print Size
+powerpc-eabivle-size --format=berkeley microcontroller.elf
+   text	   data	    bss	    dec	    hex	filename
+  84274	  16672	  30656	 131602	  20212	microcontroller.elf
+Finished building: microcontroller.siz
+ 
+10:44:09 **** Incremental Build of configuration Debug_RAM for project microcontroller ****
+make -j2 all 
+Invoking: Standard S32DS Print Size
+powerpc-eabivle-size --format=berkeley microcontroller.elf
+   text	   data	    bss	    dec	    hex	filename
+  84274	  16672	  30656	 131602	  20212	microcontroller.elf
+Finished building: microcontroller.siz
+ 
