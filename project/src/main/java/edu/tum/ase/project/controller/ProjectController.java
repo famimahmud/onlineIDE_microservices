@@ -15,19 +15,19 @@ public class ProjectController {
 
     // Projekt erstellen
     @RequestMapping(path = "/projects", method = RequestMethod.POST)
-    public Project createProject(@RequestParam String name) throws IOException {
+    public Project createProject(@RequestBody String name) throws IOException {
         return projectService.createProject(name);
     }
 
     // Projekt löschen mit Namen
     @RequestMapping(path = "/projectsByName", method = RequestMethod.DELETE)
-    public Project deleteProjectByName(@RequestParam String name) throws IOException {
+    public Project deleteProjectByName(@RequestBody String name) throws IOException {
         return projectService.deleteProjectByName(name);
     }
 
     // Projekt löschen
     @RequestMapping(path = "/projects", method = RequestMethod.DELETE)
-    public String deleteProjectById(@RequestParam String id) throws IOException {
+    public String deleteProjectById(@RequestBody String id) throws IOException {
         return projectService.deleteProjectById(id);
     }
 
@@ -46,7 +46,7 @@ public class ProjectController {
 
     // get Project by name
     @RequestMapping(path = "/projects", method = RequestMethod.GET)
-    public Project findProjectByName(@RequestParam String name) throws IOException {
+    public Project findProjectByName(@RequestBody String name) throws IOException {
         return projectService.findByName(name);
     }
 }
