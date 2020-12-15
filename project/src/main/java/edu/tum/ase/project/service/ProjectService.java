@@ -1,12 +1,24 @@
 package edu.tum.ase.project.service;
 
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 import edu.tum.ase.project.model.Project;
 import edu.tum.ase.project.repository.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
+import javax.sql.DataSource;
 import java.util.List;
 
+@Configuration
+@Profile("dev")
 @Service
 public class ProjectService {
 
@@ -50,6 +62,36 @@ public class ProjectService {
         projectRepository.save(projectToUpdate);
 
         return projectToUpdate;
+    }
+
+    @Value("${spring.datasource.url}")
+    private String jdbcUrl;
+
+    @Value("${spring.datasource.name}")
+    private String dbName;
+
+    @Value("${spring.datasource.username}")
+    private String dbUserName;
+
+    @Value("${spring.datasource.password}")
+    private String dbPassword;
+
+    @Value("${database.port}")
+    private String dbPort;
+
+    @Bean
+    public DataSource dataSource() {
+        HikariConfig config = new HikariConfig();
+        if (jdbcUrl.isEmpty()) {
+            config.setJdbcUrl("jdbc:postgresql://localhost:" + dbPort + "/" + dbName);
+            config.setUsername(dbUserName);
+            config.setPassword(dbPassword);
+        } else {
+            config.setJdbcUrl(jdbcUrl);
+            config.setUsername(dbUserName);
+            config.setPassword(dbPassword);
+        }
+        return new HikariDataSource(config);
     }
 
 }

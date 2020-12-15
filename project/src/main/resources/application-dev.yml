@@ -1,0 +1,19 @@
+spring:
+  profiles:
+    active: dev,postgresdb
+  datasource:
+    name: my_db
+    url: "${url:jdbc:postgresql://localhost:5432/my_db}"
+    username: admin
+    password: test
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        jdbc:
+          lob:
+            non_contextual_creation: true
+database:
+  port: 5432
