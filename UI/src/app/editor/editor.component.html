@@ -1,0 +1,49 @@
+<nz-layout>
+  <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="null">
+    <button [routerLink]="['/projects']" nz-button nzType="primary">Back</button>
+    <button [routerLink]="['/start']" nz-button nzType="primary" nzShape="circle">
+      <i nz-icon nzType="logout" nzTheme="outline"></i>
+    </button>
+    <ul nz-menu nzTheme="light" nzMode="inline">
+      <li nz-submenu nzTitle="Files" nzIcon="user">
+        <ul>
+          <li nz-menu-item>
+            <i nz-icon nzType="file"></i>
+            <span>File1.c</span>
+          </li>
+          <li nz-menu-item>
+            <i nz-icon nzType="file"></i>
+            <span>File2.c</span>
+          </li>
+        </ul>
+      </li>
+      <li nz-menu-item>
+        <i nz-icon nzType="file"></i>
+        <span>File</span>
+      </li>
+    </ul>
+    <button (click)="newFile()" nz-button nzType="primary">New File</button>
+    <button (click)="ShareProject()" nz-button nzType="default">Share Project</button>
+    <i nz-icon nzType="user" nzTheme="outline">m</i>
+    <i nz-icon nzType="user" nzTheme="outline">o</i>
+  </nz-sider>
+  <nz-layout>
+    <nz-header>
+      <i class="trigger" nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'" (click)="isCollapsed = !isCollapsed"></i>
+    </nz-header>
+    <nz-content>
+      <nz-breadcrumb>
+        <nz-breadcrumb-item>
+          <button (click)="saveFile()" nz-button nzType="default">Save File</button>
+        </nz-breadcrumb-item>
+        <nz-breadcrumb-item>
+          <button (click)="compile()" nz-button nzType="primary">Compile</button>
+        </nz-breadcrumb-item>
+      </nz-breadcrumb>
+      <div class="inner-content">
+        <ngx-monaco-editor [options]="editorOptions" [(ngModel)]="code"></ngx-monaco-editor>
+      </div>
+    </nz-content>
+    <nz-footer>TUM-ASE ©2021 Implemented By Group 1-7</nz-footer>
+  </nz-layout>
+</nz-layout>

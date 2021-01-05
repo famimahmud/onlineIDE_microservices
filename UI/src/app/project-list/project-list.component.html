@@ -1,0 +1,43 @@
+<nz-layout xmlns:justify-content="http://www.w3.org/1999/xhtml">
+  <nz-content>
+    <h1>Project Management</h1>
+    <div nz-row>
+      <div nz-col nzSpan="8">
+        <button (click)="addRow()" nz-button nzType="primary">Add Project</button>
+      </div>
+      <div align="right" nz-col nzSpan="8" nzOffset="8">
+        <button [routerLink]="['/start']" nz-button nzType="primary">Logout</button>
+      </div>
+    </div>
+
+    <div class="inner-content">
+      <nz-table #editRowTable nzBordered [nzData]="projects">
+        <thead>
+        <tr>
+          <th nzWidth="30%">Name</th>
+          <th>Id</th>
+          <th>Users</th>
+          <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let data of editRowTable.data" class="editable-row">
+          <td>
+            <div class="editable-cell" [hidden]="editId === data.id" (click)="startEdit(data.id)">
+              {{ data.name }}
+            </div>
+            <input [hidden]="editId !== data.id" type="text" nz-input [(ngModel)]="data.name" (blur)="stopEdit()" />
+          </td>
+          <td>{{ data.id }}</td>
+          <td>{{ data.users }}</td>
+          <td>
+            <a [routerLink]="['/editor']" nz-button nzType="link">Open</a>
+            <a nz-popconfirm nzPopconfirmTitle="Sure to delete?" (nzOnConfirm)="deleteRow(data.id)">Delete</a>
+          </td>
+        </tr>
+        </tbody>
+      </nz-table>
+    </div>
+  </nz-content>
+  <nz-footer>TUM-ASE ©2021 Implemented By Group 1-7</nz-footer>
+</nz-layout>
