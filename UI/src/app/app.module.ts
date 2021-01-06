@@ -13,17 +13,20 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ProjectListComponent } from './project-list/project-list.component';
 import { StartScreenComponent } from './start-screen/start-screen.component';
 import { EditorComponent } from './editor/editor.component';
-import {Route, RouterModule} from "@angular/router";
-import {MonacoEditorModule} from "ngx-monaco-editor";
+import {Route, RouterModule} from '@angular/router';
+import {MonacoEditorModule} from 'ngx-monaco-editor';
 import { NzButtonModule } from 'ng-zorro-antd/button';
-import {NzTableModule} from "ng-zorro-antd/table";
-import {NzPopconfirmModule} from "ng-zorro-antd/popconfirm";
-import {NzGridModule} from "ng-zorro-antd/grid";
-import {NzIconModule} from "ng-zorro-antd/icon";
+import {NzTableModule} from 'ng-zorro-antd/table';
+import {NzPopconfirmModule} from 'ng-zorro-antd/popconfirm';
+import {NzGridModule} from 'ng-zorro-antd/grid';
+import {NzIconModule} from 'ng-zorro-antd/icon';
+import {NzBreadCrumbModule} from 'ng-zorro-antd/breadcrumb';
+import {NzMenuModule} from 'ng-zorro-antd/menu';
 
 registerLocaleData(en);
 
 const routes: Route[] = [
+  {path: '', pathMatch: 'full', redirectTo: 'start'},
   {path: 'start', component: StartScreenComponent},
   {path: 'projects', component: ProjectListComponent},
   {path: 'editor', component: EditorComponent}
@@ -40,6 +43,7 @@ const routes: Route[] = [
   imports: [
     BrowserModule,
     NzPopconfirmModule,
+    NzBreadCrumbModule,
     NzTableModule,
     FormsModule,
     NzGridModule,
@@ -49,7 +53,8 @@ const routes: Route[] = [
     NzButtonModule,
     RouterModule.forRoot(routes),
     MonacoEditorModule.forRoot(),
-    NzIconModule
+    NzIconModule,
+    NzMenuModule
   ],
   providers: [{ provide: NZ_I18N, useValue: en_US }],
   bootstrap: [AppComponent]

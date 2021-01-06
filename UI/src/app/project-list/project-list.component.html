@@ -6,7 +6,9 @@
         <button (click)="addRow()" nz-button nzType="primary">Add Project</button>
       </div>
       <div align="right" nz-col nzSpan="8" nzOffset="8">
-        <button [routerLink]="['/start']" nz-button nzType="primary">Logout</button>
+        <button [routerLink]="['/start']" nz-button nzType="primary" nzShape="circle">
+          <i nz-icon nzType="logout" nzTheme="outline"></i>
+        </button>
       </div>
     </div>
 

@@ -33,7 +33,15 @@ nz-breadcrumb {
 
 .inner-content {
   background: #fff;
-  min-height: 720px;
+  min-height: 540px;
+}
+
+.monaco {
+  height: 430px;
+}
+
+.compiler {
+  height: 210px;
 }
 
 nz-footer {

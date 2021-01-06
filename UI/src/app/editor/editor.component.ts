@@ -6,29 +6,29 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./editor.component.css']
 })
 export class EditorComponent implements OnInit {
-  editorOptions = {theme: 'vs-dark', language: 'javascript'}; //TODO: Add darkmode
-  code = 'function x() {\nconsole.log("Hello world!");\n}';
 
   constructor() { }
+  editorOptions = {theme: 'vs-light', language: 'javascript'}; // TODO: Add darkmode and languages
+  code = 'function x() {\nconsole.log("Hello world!");\n}';
+
+  isCollapsed = false;
 
   ngOnInit(): void {
   }
 
-  isCollapsed = false;
-
-  saveFile() {
-      //TODO: add functionality
+  saveFile(): void{
+    // TODO: add functionality
   }
 
-  compile() {
-    //TODO: add functionality
+  compile(): void {
+     // TODO: add functionality
   }
 
-  newFile() {
-    //TODO: add functionality
+  newFile(): void {
+    // TODO: add functionality
   }
 
-  ShareProject() {
-    //TODO: add functionality
+  ShareProject(): void {
+    // TODO: add functionality
   }
 }
