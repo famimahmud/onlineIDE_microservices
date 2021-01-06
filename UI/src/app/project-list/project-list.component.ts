@@ -1,5 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import {Project} from '../project';
+import { Injectable } from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError, retry } from 'rxjs/operators';
+
+@Injectable()
+export class ConfigService {
+  constructor(private http: HttpClient) { }
+}
 
 @Component({
   selector: 'app-project-list',
@@ -25,9 +34,8 @@ export class ProjectListComponent implements OnInit {
     this.projects = [
       ...this.projects,
       {
-        id: this.i, //TODO: get out of database?
+        id: this.i,
         name: `Project ${this.i}`,
-        users: 1, //TODO: get out of database?
       }
     ];
     this.i++;
@@ -38,7 +46,15 @@ export class ProjectListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.addRow();
-    this.addRow();
+    /*HttpClient.get(
+      "jdbc:postgresql://localhost:5432/my_db", // TODO: no hard coding
+      {headers: HttpHeaders | {[header: string]: string | string[]},
+        observe: 'body' | 'events' | 'response',
+        params: HttpParams|{[param: string]: string | string[]},
+        reportProgress: boolean,
+        responseType: 'arraybuffer'|'blob'|'json'|'text',
+        withCredentials: boolean,
+    }
+    )*/
   }
 }
