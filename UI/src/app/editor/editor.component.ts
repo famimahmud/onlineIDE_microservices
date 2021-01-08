@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class EditorComponent implements OnInit {
 
   constructor() { }
-  editorOptions = {theme: 'vs-light', language: 'javascript'}; // TODO: Add darkmode and languages
+  editorOptions = {theme: 'vs-light', language: 'javascript'};
   code = 'function x() {\nconsole.log("Hello world!");\n}';
 
   isCollapsed = false;
@@ -30,5 +30,14 @@ export class EditorComponent implements OnInit {
 
   ShareProject(): void {
     // TODO: add functionality
+  }
+
+  darkMode() { // TODO: Add darkmode via microcontroller
+    if(this.editorOptions.theme == 'vs-light') {
+      this.editorOptions = {...this.editorOptions, theme: 'vs-dark'};
+    }
+    else {
+      this.editorOptions = {...this.editorOptions, theme: 'vs-light'};
+    }
   }
 }

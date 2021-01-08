@@ -3,7 +3,7 @@ import {Project} from '../project';
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, of, throwError} from 'rxjs';
-import { catchError, retry } from 'rxjs/operators';
+import {catchError, retry, tap, map} from 'rxjs/operators';
 
 @Injectable()
 @Component({
@@ -17,7 +17,7 @@ export class ProjectListComponent implements OnInit {
   i = 0;
   projects: Project[] =  [];
   editId: string | null = null;
-  private db_URL = 'jdbc:postgresql://localhost:5432/my_db'; // TODO: no hard coding
+  private BASE_URL = 'http://localhost:8080' // TODO: no absolute links
 
   startEdit(id: string): void {
     this.editId = id;
@@ -42,22 +42,37 @@ export class ProjectListComponent implements OnInit {
     this.projects = this.projects.filter(d => d.id !== id);
   }
 
-  getProjects(): Observable<Project[]>{
-    return this.http.get<Project[]>(this.db_URL);
+  getProjects(): Observable<Project[]> {
+    const url = this.BASE_URL + '/projects/all';
+    return this.http.get<Project[]>(url)
+      .pipe(
+        tap(_ => console.log('fetched projects')),
+        catchError(this.handleError<Project[]>('getProjects', []))
+      );
   }
 
+  /**
+   * Handle Http operation that failed.
+   * Let the app continue.
+   * @param operation - name of the operation that failed
+   * @param result - optional value to return as the observable result
+   */
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+
+      // TODO: send the error to remote logging infrastructure
+      console.error(error); // log to console instead
+
+      // TODO: better job of transforming error for user consumption
+      console.log(`${operation} failed: ${error.message}`);
+
+      // Let the app keep running by returning an empty result.
+      return of(result as T);
+    };
+  }
+
+
   ngOnInit(): void {
-    /*HttpClient.get(
-      "jdbc:postgresql://localhost:5432/my_db", // TODO: no hard coding
-      {headers: HttpHeaders | {[header: string]: string | string[]},
-        observe: 'body' | 'events' | 'response',
-        params: HttpParams|{[param: string]: string | string[]},
-        reportProgress: boolean,
-        responseType: 'arraybuffer'|'blob'|'json'|'text',
-        withCredentials: boolean,
-    }
-    )*/
-    // @ts-ignore
-    //this.log(this.getProjects());
+    this.getProjects().subscribe(projects => this.projects = projects);
   }
 }

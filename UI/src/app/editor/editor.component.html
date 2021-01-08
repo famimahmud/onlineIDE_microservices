@@ -2,8 +2,8 @@
   <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="null">
     <ul nz-menu nzTheme="dark" nzMode="inline" style="list-style: none;" >
       <li nz-menu-item>
-        <button [routerLink]="['/projects']" nz-button nzType="primary">Back</button>
-        <button style="margin-left: 5px" [routerLink]="['/start']" nz-button nzType="primary" nzShape="circle">
+        <button [routerLink]="['/projects']" nz-button nzType="primary" nzShape="round">Back</button>
+        <button style="margin-left: 5px; padding-left: 8px" [routerLink]="['/start']" nz-button nzType="primary" nzShape="circle">
           <i nz-icon nzType="logout" nzTheme="outline"></i>
         </button>
       </li>
@@ -20,10 +20,10 @@
         </ul>
       </li>
       <li nz-menu-item>
-        <button (click)="newFile()" nz-button nzType="primary">New File</button>
+        <button (click)="newFile()" nz-button nzType="primary" nzShape="round">New File</button>
       </li>
       <li nz-menu-item>
-        <button (click)="ShareProject()" nz-button nzType="default">Share Project</button>
+        <button (click)="ShareProject()" nz-button nzType="default" nzShape="round">Share Project</button>
       </li>
       <li nz-menu-item>
         <button nz-button nzType="primary" nzShape="circle">
@@ -42,10 +42,16 @@
     <nz-content>
       <nz-breadcrumb>
         <nz-breadcrumb-item>
-          <button (click)="saveFile()" nz-button nzType="default">Save File</button>
+          <button (click)="saveFile()" nz-button nzType="default" nzShape="round">Save File</button>
         </nz-breadcrumb-item>
         <nz-breadcrumb-item>
-          <button style="margin-left: 8px" (click)="compile()" nz-button nzType="primary">Compile</button>
+          <button style="margin-left: 8px" (click)="compile()" nz-button nzType="primary" nzShape="round">Compile</button>
+        </nz-breadcrumb-item>
+        <nz-breadcrumb-item>
+          <button style="margin-left: 8px" (click)="darkMode()" nz-button nzType="default" nzShape="round">
+            <i nz-icon nzType="bulb" nzTheme="fill"></i>
+            Dark Mode
+          </button>
         </nz-breadcrumb-item>
       </nz-breadcrumb>
       <div class="inner-content" >
