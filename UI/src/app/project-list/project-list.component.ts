@@ -2,25 +2,22 @@ import { Component, OnInit } from '@angular/core';
 import {Project} from '../project';
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import {Observable, of, throwError} from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 
 @Injectable()
-export class ConfigService {
-  constructor(private http: HttpClient) { }
-}
-
 @Component({
   selector: 'app-project-list',
   templateUrl: './project-list.component.html',
   styleUrls: ['./project-list.component.css']
 })
 export class ProjectListComponent implements OnInit {
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   i = 0;
   projects: Project[] =  [];
   editId: string | null = null;
+  private db_URL = 'jdbc:postgresql://localhost:5432/my_db'; // TODO: no hard coding
 
   startEdit(id: string): void {
     this.editId = id;
@@ -45,6 +42,10 @@ export class ProjectListComponent implements OnInit {
     this.projects = this.projects.filter(d => d.id !== id);
   }
 
+  getProjects(): Observable<Project[]>{
+    return this.http.get<Project[]>(this.db_URL);
+  }
+
   ngOnInit(): void {
     /*HttpClient.get(
       "jdbc:postgresql://localhost:5432/my_db", // TODO: no hard coding
@@ -56,5 +57,7 @@ export class ProjectListComponent implements OnInit {
         withCredentials: boolean,
     }
     )*/
+    // @ts-ignore
+    //this.log(this.getProjects());
   }
 }
