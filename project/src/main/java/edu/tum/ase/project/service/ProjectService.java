@@ -52,8 +52,6 @@ public class ProjectService {
     }
 
     public Project updateProject(Project project){
-
-        // potentially project does not exist. TODO: check error handling here
         Project projectToUpdate = projectRepository.getOne(project.getId());
 
         // potentially duplicate name. TODO: check error handling here

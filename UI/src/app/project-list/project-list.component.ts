@@ -14,65 +14,114 @@ import {catchError, retry, tap, map} from 'rxjs/operators';
 export class ProjectListComponent implements OnInit {
   constructor(private http: HttpClient) { }
 
-  i = 0;
   projects: Project[] =  [];
   editId: string | null = null;
-  private BASE_URL = 'http://localhost:8080' // TODO: no absolute links
+  private BASE_URL = 'http://localhost:4200' // TODO: no absolute links
 
+  /**
+   * Starting to edit name cell
+   * @param id - id of project that gets edited
+   */
   startEdit(id: string): void {
     this.editId = id;
   }
 
+  /**
+   * End to edit name cell. Changes are persisted in database
+   */
   stopEdit(): void {
+    // Send update request to database
+    this.http.put(`${this.BASE_URL}/projects`, this.projects.find(i => i.id.toString() === this.editId), {responseType: "json"}).pipe(
+      tap(_ => console.log(`updated project id=${this.editId}`)),
+      catchError(this.handleError<any>('updateProjects'))
+    ).subscribe();
     this.editId = null;
   }
 
+  /**
+   * Adding a new project to the persisted database and display in frontend
+   */
   addRow(): void {
-    this.projects = [
-      ...this.projects,
-      {
-        id: this.i,
-        name: `Project ${this.i}`,
+    // Re-load projects list from backend for stability
+    this.getProjects();
+
+    // Check for duplicate names
+    let i = 0;
+    for(let j = 0; j<this.projects.length; j++){
+      if (this.projects[j].name.indexOf('New Project ' + i) > -1){
+        i++;
+        j = -1;
       }
-    ];
-    this.i++;
+    }
+    const new_project = 'New Project ' + i;
+
+    // Add project to backend and reload frontend list
+    this.http.post<String>(`${this.BASE_URL}/projects`, new_project).pipe(
+      tap(_ => console.log(console.log('added new project:' + new_project))),
+      catchError(this.handleError<String>('newProject'))
+      ).subscribe();
+
+    // Update the project list
+    this.getProjects();
+    //window.location.reload(); // activate for improved stability (costing usability)
   }
 
+  /**
+   * Delete a project from the database and frontend
+   * @param id
+   */
   deleteRow(id: number): void {
-    this.projects = this.projects.filter(d => d.id !== id);
+    // Re-load projects list from backend for stability
+    this.getProjects();
+
+    // Delete project
+    this.http.delete(`${this.BASE_URL}/projects/${id}`, {responseType: "text"}).pipe(
+      tap(_ => console.log(`deleted project id=${id}`)),
+      catchError(this.handleError<number>('deleteProject'))
+    ).subscribe();
+
+    // Update the project list
+    this.getProjects();
+    //window.location.reload(); // activate for improved stability (costing usability)
   }
 
-  getProjects(): Observable<Project[]> {
-    const url = this.BASE_URL + '/projects/all';
-    return this.http.get<Project[]>(url)
+
+  /**
+   * Get all projects from backend server
+   * Inspired by: https://angular.io/tutorial/toh-pt6
+   */
+  getProjects(): void {
+    // Fetch project list from server
+    this.http.get<Project[]>(`${this.BASE_URL}/projects/all`)
       .pipe(
-        tap(_ => console.log('fetched projects')),
+        tap(_ => console.log('fetching projects successful')),
         catchError(this.handleError<Project[]>('getProjects', []))
+      ).subscribe(
+        projects => this.projects = projects
       );
   }
 
   /**
-   * Handle Http operation that failed.
-   * Let the app continue.
+   * ALL COPYRIGHTS FOR THIS METHOD TO: https://angular.io/tutorial/toh-pt6
+   * Handle Http operation that failed. Let the app continue.
    * @param operation - name of the operation that failed
    * @param result - optional value to return as the observable result
    */
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-
-      // TODO: send the error to remote logging infrastructure
-      console.error(error); // log to console instead
-
-      // TODO: better job of transforming error for user consumption
+      //Log error, should be remote and not local
+      console.error(error);
       console.log(`${operation} failed: ${error.message}`);
 
-      // Let the app keep running by returning an empty result.
+      // Let the app keep running by returning an empty result
       return of(result as T);
     };
   }
 
-
+  /**
+   * Component initializing function that loads all persisted projects from backend
+   */
   ngOnInit(): void {
-    this.getProjects().subscribe(projects => this.projects = projects);
+    this.getProjects();
   }
 }

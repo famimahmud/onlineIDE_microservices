@@ -26,8 +26,8 @@ public class ProjectController {
     }
 
     // Projekt löschen
-    @RequestMapping(path = "/projects", method = RequestMethod.DELETE)
-    public String deleteProjectById(@RequestBody String id) throws IOException {
+    @RequestMapping(path = "/projects/{id}", method = RequestMethod.DELETE)
+    public String deleteProjectById(@PathVariable String id) throws IOException {
         return projectService.deleteProjectById(id);
     }
 
@@ -42,7 +42,6 @@ public class ProjectController {
     public List<Project> listAllProjects() throws IOException {
         return projectService.getProjects();
     }
-
 
     // get Project by name
     @RequestMapping(path = "/projects", method = RequestMethod.GET)

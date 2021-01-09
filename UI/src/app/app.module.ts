@@ -28,7 +28,7 @@ registerLocaleData(en);
 const routes: Route[] = [
   {path: '', pathMatch: 'full', redirectTo: 'start'},
   {path: 'start', component: StartScreenComponent},
-  {path: 'projects', component: ProjectListComponent},
+  {path: 'project-list', component: ProjectListComponent},
   {path: 'editor', component: EditorComponent}
 ];
 
