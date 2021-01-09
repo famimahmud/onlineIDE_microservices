@@ -33,7 +33,7 @@
           <td>{{ data.id }}</td>
           <td> 1 </td>
           <td>
-            <a [routerLink]="['/editor']" nz-button nzType="link">Open</a>
+            <a [routerLink]="['/editor', data.id]" nz-button nzType="link">Open</a>
             <a nz-popconfirm nzPopconfirmTitle="Sure to delete?" (nzOnConfirm)="deleteRow(data.id)">Delete</a>
           </td>
         </tr>

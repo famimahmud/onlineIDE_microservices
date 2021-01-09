@@ -14,7 +14,7 @@ import {catchError, retry, tap, map} from 'rxjs/operators';
 export class ProjectListComponent implements OnInit {
   constructor(private http: HttpClient) { }
 
-  projects: Project[] =  [];
+  projects: Project[] = [];
   editId: string | null = null;
   private BASE_URL = 'http://localhost:4200' // TODO: no absolute links
 

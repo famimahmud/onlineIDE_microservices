@@ -23,7 +23,7 @@
         <button (click)="newFile()" nz-button nzType="primary" nzShape="round">New File</button>
       </li>
       <li nz-menu-item>
-        <button (click)="ShareProject()" nz-button nzType="default" nzShape="round">Share Project</button>
+        <button (click)="shareProject()" nz-button nzType="default" nzShape="round">Share Project</button>
       </li>
       <li nz-menu-item>
         <button nz-button nzType="primary" nzShape="circle">
@@ -42,15 +42,27 @@
     <nz-content>
       <nz-breadcrumb>
         <nz-breadcrumb-item>
-          <button (click)="saveFile()" nz-button nzType="default" nzShape="round">Save File</button>
+          <button (click)="deleteFile()" nz-button nzType="default" nzShape="round">
+            <i nz-icon nzType="delete" nzTheme="fill"></i>
+            Delete File
+          </button>
         </nz-breadcrumb-item>
         <nz-breadcrumb-item>
-          <button style="margin-left: 8px" (click)="compile()" nz-button nzType="primary" nzShape="round">Compile</button>
+          <button style="margin-left: 8px" (click)="saveFile()" nz-button nzType="default" nzShape="round">
+            <i nz-icon nzType="save" nzTheme="fill"></i>
+            Save File
+          </button>
         </nz-breadcrumb-item>
         <nz-breadcrumb-item>
           <button style="margin-left: 8px" (click)="darkMode()" nz-button nzType="default" nzShape="round">
             <i nz-icon nzType="bulb" nzTheme="fill"></i>
             Dark Mode
+          </button>
+        </nz-breadcrumb-item>
+        <nz-breadcrumb-item>
+          <button style="margin-left: 8px" (click)="compile()" nz-button nzType="primary" nzShape="round">
+            <i nz-icon nzType="play-circle" nzTheme="fill"></i>
+            Compile
           </button>
         </nz-breadcrumb-item>
       </nz-breadcrumb>
