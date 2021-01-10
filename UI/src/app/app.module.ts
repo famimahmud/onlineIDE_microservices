@@ -22,6 +22,7 @@ import {NzGridModule} from 'ng-zorro-antd/grid';
 import {NzIconModule} from 'ng-zorro-antd/icon';
 import {NzBreadCrumbModule} from 'ng-zorro-antd/breadcrumb';
 import {NzMenuModule} from 'ng-zorro-antd/menu';
+import { NzInputModule } from 'ng-zorro-antd/input';
 
 registerLocaleData(en);
 
@@ -45,6 +46,7 @@ const routes: Route[] = [
     NzPopconfirmModule,
     NzBreadCrumbModule,
     NzTableModule,
+    NzInputModule,
     FormsModule,
     NzGridModule,
     HttpClientModule,
