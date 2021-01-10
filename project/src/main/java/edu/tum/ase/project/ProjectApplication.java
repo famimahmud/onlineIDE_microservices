@@ -33,12 +33,12 @@ public class ProjectApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-//        log.info("DataSource = " + dataSource);
-//        Project project = projectService.createProject(new Project("my-project"));
-//        log.info("ID of saved project = " + project.getId());
-//        Project p = projectService.findByName("my-project");
-//        log.info("ID of queried project = " + p.getId());
-//        List<Project> projects = projectService.getProjects();
-//        log.info("Length of project list = " + projects.size());
+        log.info("DataSource = " + dataSource);
+        //Project p1 = projectService.createProject("test project 1");
+        //Project p2 = projectService.createProject("test project 2");
+        //log.info(String.format("Projects with ids: %s and %s saved.", p1.getId(), p2.getId()));
+        //log.info(projectService.deleteProjectById("ff80818176e649d30176e649d5020000"));
+        List<Project> projects = projectService.getProjects();
+        log.info("Project List " + projects);
     }
 }

@@ -13,5 +13,13 @@ spring:
                 jdbc:
                     lob:
                         non_contextual_creation: true
+
+    jackson:
+        serialization:
+            FAIL_ON_EMPTY_BEANS: false
 database:
     port: 5432
+server:
+    port: 8081
+
+

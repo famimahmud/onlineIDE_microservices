@@ -52,11 +52,9 @@ public class ProjectService {
     }
 
     public Project updateProject(Project project){
-
-        // potentially project does not exist. TODO: check error handling here
         Project projectToUpdate = projectRepository.getOne(project.getId());
 
-        // potentially duplicate name. TODO: check error handling here
+        // potentially duplicate name. TODO: check error handling here <- einfach so wie mit den schleifen und -1 machen und dann beim Namen (2) oder ähnlich dran hängen
         projectToUpdate.setName(project.getName());
 
         projectRepository.save(projectToUpdate);

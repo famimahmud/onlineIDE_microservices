@@ -17,8 +17,8 @@ public class SourceFileController {
 
     // Sourcefile erstellen
     @RequestMapping(path = "/projects/{projectId}/source_files", method = RequestMethod.POST)
-    public SourceFile createSourceFile(@RequestBody Map<String, String> json, @PathVariable String projectId) throws IOException {
-        return sourceFileService.addSourceFile(json.get("name"), json.get("sourceCode"), projectId);
+    public SourceFile createSourceFile(@RequestBody Map<String, String> new_file, @PathVariable String projectId) throws IOException {
+        return sourceFileService.addSourceFile(new_file.get("name"), new_file.get("sourceCode"), projectId);
     }
 
     // Sourcefiles für Projekt abrufen
@@ -28,14 +28,15 @@ public class SourceFileController {
     }
 
     // delete by id
-    @RequestMapping(path = "/projects/{projectId}/source_files", method = RequestMethod.DELETE)
-    public String deleteSourceFileById(@RequestBody String id, @PathVariable String projectId) throws IOException {
+    @RequestMapping(path = "/projects/{projectId}/source_files/{id}", method = RequestMethod.DELETE)
+    public String deleteSourceFileById(@PathVariable String projectId, @PathVariable String id ) throws IOException {
         return sourceFileService.deleteSourceFileById(id);
     }
 
     // update by id
     @RequestMapping(path = "/projects/{projectId}/source_files", method = RequestMethod.PUT)
     public SourceFile updateSourceFile(@RequestBody SourceFile sourceFile, @PathVariable String projectId) throws IOException {
+        System.out.println(sourceFile);
         return sourceFileService.updateSourceFile(sourceFile);
     }
 }

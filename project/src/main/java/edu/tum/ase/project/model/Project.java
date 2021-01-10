@@ -1,5 +1,6 @@
 package edu.tum.ase.project.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -8,6 +9,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
 
+@JsonSerialize
 @Entity
 @Table(name = "projects")
 public class Project implements Serializable {
