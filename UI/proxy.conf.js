@@ -7,6 +7,13 @@ const PROXY_CONFIG = [
     ],
     target: "http://localhost:8081",
     secure: false
+  },
+  {
+    context: [
+      "/compile",
+    ],
+    target: "http://localhost:8082",
+    secure: false
   }
 ]
 

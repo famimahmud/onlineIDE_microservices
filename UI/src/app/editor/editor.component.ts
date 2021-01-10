@@ -2,10 +2,10 @@ import {Component, Injectable, Input, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {SourceFile} from "../sourcefile";
 import {catchError, tap} from "rxjs/operators";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {Observable, of} from "rxjs";
 import {Project} from "../project";
-import { NzInputModule } from 'ng-zorro-antd/input';
+import {NzMessageService} from "ng-zorro-antd/message";
 
 @Injectable()
 @Component({
@@ -16,7 +16,8 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 export class EditorComponent implements OnInit {
   constructor(
     private _route: ActivatedRoute,
-    private http: HttpClient
+    private http: HttpClient,
+    private message: NzMessageService
   ) { }
 
   // Static params
@@ -30,6 +31,7 @@ export class EditorComponent implements OnInit {
   files: SourceFile[] = [];
   selected_file : SourceFile = new SourceFile(0, '', '');
   new_filename: string = '';
+  compiler_out: string = '';
 
   // Interactive params
   isCollapsed = false;
@@ -48,7 +50,7 @@ export class EditorComponent implements OnInit {
   }
 
   /**
-   * Fetch the name of the currently opened project
+   * Fetch the currently opened project
    * @param id - projectId
    */
   getProjectName(id : string) {
@@ -163,6 +165,7 @@ export class EditorComponent implements OnInit {
       tap(_ => console.log(`deleted file id ${_}`)),
       catchError(this.handleError<number>('deleteFile'))
     ).subscribe();
+    this.message.create('success','File ' + this.selected_file.name + ' deleted!');
 
     // Update the file list and selected
     this.selected_file = new SourceFile(0, '', '');
@@ -180,14 +183,36 @@ export class EditorComponent implements OnInit {
       tap(_ => console.log(`saved file id=${this.selected_file.id}`)),
       catchError(this.handleError<any>('saveFile'))
     ).subscribe();
+    this.message.create('success', 'Saved file ' + this.selected_file.name + '!');
   }
 
   /**
    * Compile the current source file
    */
   compile(): void {
+    // Save file before compiling
     this.saveFile();
-    // TODO: Compile file
+
+    // Notify user about compiling
+    this.compiler_out = '';
+    const id = this.message.loading('Compiling ' + this.selected_file.name + '...', { nzDuration: 0 }).messageId;
+    setTimeout(() => {
+      this.message.remove(id);
+    }, 1250);
+
+    // generate matching file for compiler
+    let sourceCode = {
+      code: this.selected_file.sourceCode,
+      fileName: this.selected_file.name,
+      stdout: '',
+      stderr: '',
+    }
+
+    // compile selected file with the compiler microservice
+    this.http.post<any>(`${this.BASE_URL}/compile`, sourceCode).pipe(
+      tap(_ => console.log(console.log('compiled file: ' + this.selected_file.name))),
+      catchError(this.handleError<String>('newFile'))
+    ).subscribe(compiledFile => this.compiler_out = this.compiler_out.concat(compiledFile.stdout, compiledFile.stderr));
   }
 
   /**

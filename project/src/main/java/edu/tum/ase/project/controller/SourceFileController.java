@@ -36,6 +36,7 @@ public class SourceFileController {
     // update by id
     @RequestMapping(path = "/projects/{projectId}/source_files", method = RequestMethod.PUT)
     public SourceFile updateSourceFile(@RequestBody SourceFile sourceFile, @PathVariable String projectId) throws IOException {
+        System.out.println(sourceFile);
         return sourceFileService.updateSourceFile(sourceFile);
     }
 }
