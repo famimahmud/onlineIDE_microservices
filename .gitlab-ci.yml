@@ -8,9 +8,11 @@ stages:
     - package
 
 # Build job
-build:
+build_compiler:
     stage: build
-    script: mvn clean compile
+    script:
+        - cd compiler
+        - mvn clean compile
 
 # Test job
 test:
