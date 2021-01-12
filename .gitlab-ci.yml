@@ -15,9 +15,11 @@ build_compiler:
         - mvn clean compile
 
 # Test job
-test:
+test_compiler:
     stage: test
-    script: mvn test
+    script:
+        - cd compiler
+        - mvn test
 
 
 # Package job
