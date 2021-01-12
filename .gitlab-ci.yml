@@ -1,0 +1,28 @@
+#This template uses jdk8 for veryfying and deplyoing images
+image: maven:3.3.9-jdk-8
+
+# Stages
+stages: 
+    - build
+    - test
+    - package
+
+# Build job
+build:
+    stage: build
+    script: mvn clean compile
+
+# Test job
+test:
+    stage: test
+    script: mvn test
+
+
+# Package job
+package:
+    stage: package
+    script: mvn package
+    variables:
+        MAVEN_OPTS: "-DskipTests=true"
+
+
