@@ -17,7 +17,7 @@ public class SourceFile {
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     @Column(name = "id")
     private String id;
-    @Column(name = "name", nullable = false, unique = true)
+    @Column(name = "name", nullable = false, unique = false)
     private String name;
     // explizite Typangabe
     @Column(name = "sourcecode", nullable = false, columnDefinition = "text")

@@ -7,23 +7,70 @@ stages:
     - test
     - package
 
-# Build job
+# Build job compiler
 build_compiler:
     stage: build
     script:
         - cd compiler
         - mvn clean compile
 
-# Test job
-test:
+# Build job project
+build_project:
+    stage: build
+    script:
+        - cd project
+        - mvn clean compile
+
+# Build job ui
+build_ui:
+    stage: build
+    script:
+        - cd UI
+        - mvn clean compile
+
+# Build UI/UI (Angular)
+build_ui_angular:
+
+    stage: build
+    image: trion/ng-cli
+    before_script:
+        - cd UI/UI
+        - npm ci
+    script:
+        - ng build
+
+
+
+# Test job compiler
+test_compiler:
     stage: test
-    script: mvn test
+    script:
+        - cd compiler
+        - mvn test
 
 
-# Package job
-package:
+# Package jobs
+package_compiler:
     stage: package
-    script: mvn package
+    script:
+        - cd compiler 
+        - mvn package
+    variables:
+        MAVEN_OPTS: "-DskipTests=true"
+
+package_project:
+    stage: package
+    script:
+        - cd project 
+        - mvn package
+    variables:
+        MAVEN_OPTS: "-DskipTests=true"
+
+package_ui:
+    stage: package
+    script:
+        - cd UI 
+        - mvn package
     variables:
         MAVEN_OPTS: "-DskipTests=true"
 

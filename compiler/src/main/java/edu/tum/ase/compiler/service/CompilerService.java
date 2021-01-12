@@ -57,6 +57,7 @@ public class CompilerService {
             }
 
             //evtl. sollte man hier noch die generierten Dateien löschen
+            //evtl. würde das Sinn ergeben:) (Kommentar von 12.01.2020)
 
         } catch (IOException e) {
             e.printStackTrace();
