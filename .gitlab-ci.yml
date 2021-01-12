@@ -25,7 +25,7 @@ build_project:
 build_ui:
     stage: build
     script:
-        - cd ui
+        - cd UI
         - mvn clean compile
 
 # Test job compiler
