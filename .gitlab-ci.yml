@@ -23,9 +23,11 @@ test_compiler:
 
 
 # Package job
-package:
+package_compiler:
     stage: package
-    script: mvn package
+    script:
+        - cd compiler 
+        - mvn package
     variables:
         MAVEN_OPTS: "-DskipTests=true"
 
