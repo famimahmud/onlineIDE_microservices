@@ -34,6 +34,7 @@ build_ui_angular:
     stage: build
     image: trion/ng-cli
     before_script:
+        - cd UI/UI
         - npm ci
     script:
         - ng build
