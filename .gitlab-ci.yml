@@ -7,14 +7,28 @@ stages:
     - test
     - package
 
-# Build job
+# Build job compiler
 build_compiler:
     stage: build
     script:
         - cd compiler
         - mvn clean compile
 
-# Test job
+# Build job project
+build_project:
+    stage: build
+    script:
+        - cd project
+        - mvn clean compile
+
+# Build job ui
+build_ui:
+    stage: build
+    script:
+        - cd ui
+        - mvn clean compile
+
+# Test job compiler
 test_compiler:
     stage: test
     script:
@@ -22,8 +36,24 @@ test_compiler:
         - mvn test
 
 
-# Package job
+# Package jobs
 package_compiler:
+    stage: package
+    script:
+        - cd compiler 
+        - mvn package
+    variables:
+        MAVEN_OPTS: "-DskipTests=true"
+
+package_project:
+    stage: package
+    script:
+        - cd project 
+        - mvn package
+    variables:
+        MAVEN_OPTS: "-DskipTests=true"
+
+package_ui:
     stage: package
     script:
         - cd compiler 
