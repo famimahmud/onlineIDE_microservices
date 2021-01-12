@@ -28,6 +28,18 @@ build_ui:
         - cd UI
         - mvn clean compile
 
+# Build UI/UI (Angular)
+build_ui_angular:
+
+    stage: build
+    image: trion/ng-cli
+    before_script:
+        - npm ci
+    script:
+        - ng build
+
+
+
 # Test job compiler
 test_compiler:
     stage: test
@@ -56,7 +68,7 @@ package_project:
 package_ui:
     stage: package
     script:
-        - cd compiler 
+        - cd UI 
         - mvn package
     variables:
         MAVEN_OPTS: "-DskipTests=true"
