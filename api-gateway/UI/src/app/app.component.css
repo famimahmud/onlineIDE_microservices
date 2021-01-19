@@ -1,0 +1,21 @@
+nz-header {
+  color: #fff;
+  font-size: 30px;
+}
+.logo {
+  width: 70px;
+  height: 28px;
+  float: left;
+}
+
+.heading {
+  padding-top: 5px;
+}
+
+img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+
+
