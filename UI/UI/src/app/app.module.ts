@@ -31,7 +31,8 @@ const routes: Route[] = [
   {path: '', pathMatch: 'full', redirectTo: 'start'},
   {path: 'start', component: StartScreenComponent},
   {path: 'project-list', component: ProjectListComponent},
-  {path: 'editor/:projectId', component: EditorComponent}
+  {path: 'editor/:projectId', component: EditorComponent},
+  {path: '**', redirectTo: '/'}
 ];
 
 

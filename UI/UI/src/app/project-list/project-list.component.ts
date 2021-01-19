@@ -16,7 +16,6 @@ export class ProjectListComponent implements OnInit {
 
   projects: Project[] = [];
   editId: string | null = null;
-  private BASE_URL = 'http://localhost:4200' // TODO: no absolute links
 
   /**
    * Starting to edit name cell
@@ -31,7 +30,7 @@ export class ProjectListComponent implements OnInit {
    */
   stopEdit(): void {
     // Send update request to database
-    this.http.put(`${this.BASE_URL}/projects`, this.projects.find(i => i.id.toString() === this.editId), {responseType: "json"}).pipe(
+    this.http.put('/projects', this.projects.find(i => i.id.toString() === this.editId), {responseType: "json"}).pipe(
       tap(_ => console.log(`updated project id=${this.editId}`)),
       catchError(this.handleError<any>('updateProjects'))
     ).subscribe();
@@ -56,7 +55,7 @@ export class ProjectListComponent implements OnInit {
     const new_project = 'New Project ' + i;
 
     // Add project to backend and reload frontend list
-    this.http.post<String>(`${this.BASE_URL}/projects`, new_project).pipe(
+    this.http.post<String>('/projects', new_project).pipe(
       tap(_ => console.log(console.log('added new project:' + new_project))),
       catchError(this.handleError<String>('newProject'))
       ).subscribe();
@@ -75,7 +74,7 @@ export class ProjectListComponent implements OnInit {
     this.getProjects();
 
     // Delete project
-    this.http.delete(`${this.BASE_URL}/projects/${id}`, {responseType: "text"}).pipe(
+    this.http.delete('/projects/${id}', {responseType: "text"}).pipe(
       tap(_ => console.log(`deleted project id=${id}`)),
       catchError(this.handleError<number>('deleteProject'))
     ).subscribe();
@@ -92,7 +91,7 @@ export class ProjectListComponent implements OnInit {
    */
   getProjects(): void {
     // Fetch project list from server
-    this.http.get<Project[]>(`${this.BASE_URL}/projects/all`)
+    this.http.get<Project[]>('/projects/all')
       .pipe(
         tap(_ => console.log('fetching projects successful')),
         catchError(this.handleError<Project[]>('getProjects', []))
