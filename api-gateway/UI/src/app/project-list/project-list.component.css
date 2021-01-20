@@ -1,0 +1,35 @@
+
+nz-content {
+  margin: 16px 0;
+  padding: 0 50px;
+  text-align: left;
+}
+
+[nz-button] {
+  margin-top: 10px;
+  margin-right: 4px;
+  margin-bottom: 12px;
+}
+
+nz-footer {
+  text-align: center;
+}
+
+.inner-content {
+  background: #fff;
+  padding: 24px;
+  min-height: 280px;
+}
+
+.editable-cell {
+  position: relative;
+  padding: 5px 12px;
+  cursor: pointer;
+}
+
+.editable-row:hover .editable-cell {
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  padding: 4px 11px;
+}
+
