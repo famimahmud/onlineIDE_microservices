@@ -10,6 +10,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -18,6 +19,7 @@ import javax.sql.DataSource;
 import java.util.List;
 
 @SpringBootApplication
+@EnableEurekaClient
 public class ProjectApplication implements CommandLineRunner {
     private static final Logger log = LoggerFactory.getLogger(ProjectApplication.class);
 
