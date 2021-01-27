@@ -28,7 +28,7 @@ import {NzMessageModule} from "ng-zorro-antd/message";
 registerLocaleData(en);
 
 const routes: Route[] = [
-  {path: '', pathMatch: 'full', redirectTo: 'start'},
+  {path: 'ui', pathMatch: 'full', redirectTo: 'start'},
   {path: 'start', component: StartScreenComponent},
   {path: 'project-list', component: ProjectListComponent},
   {path: 'editor/:projectId', component: EditorComponent},

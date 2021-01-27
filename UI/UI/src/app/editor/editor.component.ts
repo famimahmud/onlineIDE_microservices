@@ -57,7 +57,7 @@ export class EditorComponent implements OnInit {
     }
 
     // Fetch project list from server
-    this.http.get<Project[]>('projects/all')
+    this.http.get<Project[]>('/projects/all')
       .pipe(
         tap(_ => console.log('fetching project name successful')),
         catchError(this.handleError<Project[]>('getProjects', []))
@@ -70,7 +70,7 @@ export class EditorComponent implements OnInit {
    * Fetch all files from the server
    */
   getFiles() : void{
-    this.http.get<SourceFile[]>(`projects/${this.projectId}/source_files`)
+    this.http.get<SourceFile[]>(`/projects/${this.projectId}/source_files`)
       .pipe(
         tap(_ => console.log('fetching source files successful')),
         catchError(this.handleError<SourceFile[]>('getFiles', []))
@@ -158,7 +158,7 @@ export class EditorComponent implements OnInit {
     this.getFiles();
 
     // Delete file
-    this.http.delete(`projects/${this.projectId}/source_files/${this.selected_file.id}`, {responseType: "text"}).pipe(
+    this.http.delete(`/projects/${this.projectId}/source_files/${this.selected_file.id}`, {responseType: "text"}).pipe(
       tap(_ => console.log(`deleted file id ${_}`)),
       catchError(this.handleError<number>('deleteFile'))
     ).subscribe();
@@ -176,7 +176,7 @@ export class EditorComponent implements OnInit {
    */
   saveFile(): void{
     // Send update request to database
-    this.http.put(`projects/${this.projectId}/source_files`, this.selected_file, {responseType: "json"}).pipe(
+    this.http.put(`/projects/${this.projectId}/source_files`, this.selected_file, {responseType: "json"}).pipe(
       tap(_ => console.log(`saved file id=${this.selected_file.id}`)),
       catchError(this.handleError<any>('saveFile'))
     ).subscribe();
@@ -206,7 +206,7 @@ export class EditorComponent implements OnInit {
     }
 
     // compile selected file with the compiler microservice
-    this.http.post<any>(`compile`, sourceCode).pipe(
+    this.http.post<any>(`/compile`, sourceCode).pipe(
       tap(_ => console.log(console.log('compiled file: ' + this.selected_file.name))),
       catchError(this.handleError<String>('newFile'))
     ).subscribe(compiledFile => this.compiler_out = this.compiler_out.concat(compiledFile.stdout, compiledFile.stderr));

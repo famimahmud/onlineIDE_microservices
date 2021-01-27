@@ -1,6 +1,6 @@
 spring:
   application:
-    name: UI-service
+    name: ui-service
 server:
   port: ${PORT:8080}
   servlet:
