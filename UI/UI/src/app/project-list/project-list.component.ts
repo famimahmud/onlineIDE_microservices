@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, of, throwError} from 'rxjs';
 import {catchError, retry, tap, map} from 'rxjs/operators';
+import {AuthService} from "../auth.service";
 
 @Injectable()
 @Component({
@@ -12,7 +13,7 @@ import {catchError, retry, tap, map} from 'rxjs/operators';
   styleUrls: ['./project-list.component.css']
 })
 export class ProjectListComponent implements OnInit {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, public authService: AuthService) { }
 
   projects: Project[] = [];
   editId: string | null = null;
@@ -30,7 +31,7 @@ export class ProjectListComponent implements OnInit {
    */
   stopEdit(): void {
     // Send update request to database
-    this.http.put('/projects', this.projects.find(i => i.id.toString() === this.editId), {responseType: "json"}).pipe(
+    this.http.put('/api/projects', this.projects.find(i => i.id.toString() === this.editId), {responseType: "json"}).pipe(
       tap(_ => console.log(`updated project id=${this.editId}`)),
       catchError(this.handleError<any>('updateProjects'))
     ).subscribe();
@@ -55,7 +56,7 @@ export class ProjectListComponent implements OnInit {
     const new_project = 'New Project ' + i;
 
     // Add project to backend and reload frontend list
-    this.http.post<String>('/projects', new_project).pipe(
+    this.http.post<String>('/api/projects', new_project).pipe(
       tap(_ => console.log(console.log('added new project:' + new_project))),
       catchError(this.handleError<String>('newProject'))
       ).subscribe();
@@ -74,7 +75,7 @@ export class ProjectListComponent implements OnInit {
     this.getProjects();
 
     // Delete project
-    this.http.delete('/projects/${id}', {responseType: "text"}).pipe(
+    this.http.delete('/api/projects/${id}', {responseType: "text"}).pipe(
       tap(_ => console.log(`deleted project id=${id}`)),
       catchError(this.handleError<number>('deleteProject'))
     ).subscribe();
@@ -91,7 +92,7 @@ export class ProjectListComponent implements OnInit {
    */
   getProjects(): void {
     // Fetch project list from server
-    this.http.get<Project[]>('/projects/all')
+    this.http.get<Project[]>('/api/projects/all')
       .pipe(
         tap(_ => console.log('fetching projects successful')),
         catchError(this.handleError<Project[]>('getProjects', []))
