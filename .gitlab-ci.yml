@@ -39,20 +39,6 @@ build_ui_angular:
     script:
         - ng build
 
-# Build job api-gateway
-build_ui:
-    stage: build
-    script:
-        - cd api-gateway
-        - mvn clean compile
-
-# Build job service-registry
-build_ui:
-    stage: build
-    script:
-        - cd service-registry
-        - mvn clean compile
-
 
 
 # Test job compiler
@@ -84,22 +70,6 @@ package_ui:
     stage: package
     script:
         - cd UI 
-        - mvn package
-    variables:
-        MAVEN_OPTS: "-DskipTests=true"
-
-package_api-gateway:
-    stage: package
-    script:
-        - cd api-gateway 
-        - mvn package
-    variables:
-        MAVEN_OPTS: "-DskipTests=true"
-
-package_service-registry:
-    stage: package
-    script:
-        - cd service-registry
         - mvn package
     variables:
         MAVEN_OPTS: "-DskipTests=true"

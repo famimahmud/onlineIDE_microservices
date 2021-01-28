@@ -1,9 +1,9 @@
 const PROXY_CONFIG = [
   {
     context: [
-      "/api/projects",
-      "/api/projects/all",
-      "/api/projectsByName",
+      "/projects",
+      "/projects/all",
+      "/projectsByName",
     ],
     target: "http://localhost:8081",
     secure: false

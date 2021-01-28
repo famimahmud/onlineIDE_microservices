@@ -2,7 +2,7 @@ spring:
   application:
     name: ui-service
 server:
-  port: ${PORT:8084}
+  port: ${PORT:8080}
   servlet:
     context-path: /ui
 eureka:

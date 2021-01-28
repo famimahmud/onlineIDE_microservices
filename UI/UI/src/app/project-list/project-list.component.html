@@ -6,8 +6,7 @@
         <button (click)="addRow()" nz-button nzType="primary" nzShape="round">Add Project</button>
       </div>
       <div align="right" nz-col nzSpan="8" nzOffset="8">
-        <button *ngIf="authService.authenticated | async" (click)="authService.logout()"
-                [routerLink]="['/start']" nz-button nzType="primary" nzShape="circle">
+        <button [routerLink]="['/start']" nz-button nzType="primary" nzShape="circle">
           <i nz-icon nzType="logout" nzTheme="outline"></i>
         </button>
       </div>

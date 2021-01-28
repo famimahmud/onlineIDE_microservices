@@ -24,15 +24,14 @@ import {NzBreadCrumbModule} from 'ng-zorro-antd/breadcrumb';
 import {NzMenuModule} from 'ng-zorro-antd/menu';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import {NzMessageModule} from "ng-zorro-antd/message";
-import {AuthGuard} from "./auth.guard";
 
 registerLocaleData(en);
 
 const routes: Route[] = [
-  {path: '', pathMatch: 'full', redirectTo: 'start'},
+  {path: 'ui', pathMatch: 'full', redirectTo: 'start'},
   {path: 'start', component: StartScreenComponent},
-  {path: 'project-list', component: ProjectListComponent, canActivate: [AuthGuard]},
-  {path: 'editor/:projectId', component: EditorComponent, canActivate: [AuthGuard]},
+  {path: 'project-list', component: ProjectListComponent},
+  {path: 'editor/:projectId', component: EditorComponent},
   {path: '**', redirectTo: '/'}
 ];
 

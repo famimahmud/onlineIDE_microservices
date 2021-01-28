@@ -1,6 +1,6 @@
 spring:
     application:
-        name: project-service
+        name: Project-service
     datasource:
         name: my_db
         url: "${url:jdbc:postgresql://localhost:5432/my_db}"
