@@ -2,7 +2,7 @@ spring:
   application:
     name: api-gateway-service
 server:
-  port: ${PORT:8084}
+  port: ${PORT:8080}
 eureka:
   client:
     serviceUrl:
@@ -11,23 +11,6 @@ zuul.host.socket-timeout-millis: 20000
 zuul.host.connect-timeout-millis: 20000
 ribbon.ConnectTimeout: 10000
 ribbon.ReadTimeout: 10000
-zuul:
-  # Alle services are added into Zuul routes automatically as default.
-  # You can disable it with the ignored-services property set to *.
-  ignored-services: "*"
-  routes:
-    project-service:
-      path: "/projects/**"
-      service-id: project-service
-      strip-prefix: false
-    ui-service:
-      path: "/ui/**"
-      service-id: ui-service
-      strip-prefix: false
-    compiler-service:
-      path: "/compile/**"
-      service-id: compiler-service
-      strip-prefix: false
 
 security:
   oauth2:
@@ -41,4 +24,29 @@ security:
         - api
     resource:
       userInfoUri: https://gitlab.lrz.de/api/v4/user
+
+zuul:
+  # All services are added into Zuul routes automatically as default.
+  # You can disable it with the ignored-services property set to *.
+  ignored-services: "*"
+  routes:
+    project-service:
+      path: "/api/projects/**"
+      service-id: project-service
+      strip-prefix: false
+      sensitiveHeaders: Cookie,Set-Cookie # Authentication
+    ui-service:
+      path: "/ui/**"
+      service-id: ui-service
+      strip-prefix: false
+    compiler-service:
+      path: "/compile/**"
+      service-id: compiler-service
+      strip-prefix: false
+proxy:
+  auth:
+    routes:
+      project-service: oauth2
+
+
 

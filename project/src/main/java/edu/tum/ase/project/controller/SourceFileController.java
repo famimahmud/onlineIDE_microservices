@@ -16,25 +16,25 @@ public class SourceFileController {
     private SourceFileService sourceFileService;
 
     // Sourcefile erstellen
-    @RequestMapping(path = "/projects/{projectId}/source_files", method = RequestMethod.POST)
+    @RequestMapping(path = "/api/projects/{projectId}/source_files", method = RequestMethod.POST)
     public SourceFile createSourceFile(@RequestBody Map<String, String> new_file, @PathVariable String projectId) throws IOException {
         return sourceFileService.addSourceFile(new_file.get("name"), new_file.get("sourceCode"), projectId);
     }
 
     // Sourcefiles für Projekt abrufen
-    @RequestMapping(path = "/projects/{projectId}/source_files", method = RequestMethod.GET)
+    @RequestMapping(path = "/api/projects/{projectId}/source_files", method = RequestMethod.GET)
     public List<SourceFile> getSourceFiles(@PathVariable String projectId) throws IOException {
         return sourceFileService.findListByProjectId(projectId);
     }
 
     // delete by id
-    @RequestMapping(path = "/projects/{projectId}/source_files/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(path = "/api/projects/{projectId}/source_files/{id}", method = RequestMethod.DELETE)
     public String deleteSourceFileById(@PathVariable String projectId, @PathVariable String id ) throws IOException {
         return sourceFileService.deleteSourceFileById(id);
     }
 
     // update by id
-    @RequestMapping(path = "/projects/{projectId}/source_files", method = RequestMethod.PUT)
+    @RequestMapping(path = "/api/projects/{projectId}/source_files", method = RequestMethod.PUT)
     public SourceFile updateSourceFile(@RequestBody SourceFile sourceFile, @PathVariable String projectId) throws IOException {
         System.out.println(sourceFile);
         return sourceFileService.updateSourceFile(sourceFile);
