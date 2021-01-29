@@ -51,4 +51,7 @@ public class SourceCode {
     public void setCompilable(boolean compilable) {
         this.compilable = compilable;
     }
+
+    public void alterStdout(String output) { this.stdout += output; }
+
 }

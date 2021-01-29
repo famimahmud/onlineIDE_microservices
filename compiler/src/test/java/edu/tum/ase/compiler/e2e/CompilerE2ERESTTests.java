@@ -47,7 +47,7 @@ public class CompilerE2ERESTTests {
          result
                         .andExpect(status().isOk())
                         .andExpect(MockMvcResultMatchers.jsonPath("$.compilable").value(true))
-                        .andExpect(MockMvcResultMatchers.jsonPath("$.stdout").value("Compilation was successful!"))
+                        .andExpect(MockMvcResultMatchers.jsonPath("$.stdout").value("Compilation was successful!\n" + "Hello World\n"))
                         .andExpect(MockMvcResultMatchers.jsonPath("$.stderr").value(""))
          ;
 //

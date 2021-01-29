@@ -26,7 +26,7 @@ public class CompilerServiceTestIT {
         sourceCode.setFileName("App.java");
         sourceCode.setCode("public class App { public static void main(String[] args) {System.out.println(\"Hello World!\");}}");
 
-        assertEquals("Compilation was successful!", systemUnderTest.compile(sourceCode).getStdout());
+        assertEquals("Compilation was successful!\n" + "Hello World\n", systemUnderTest.compile(sourceCode).getStdout());
         assertEquals(true, systemUnderTest.compile(sourceCode).isCompilable());
 
     }
