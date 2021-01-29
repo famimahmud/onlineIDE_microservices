@@ -7,6 +7,7 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 @JsonSerialize
@@ -20,23 +21,23 @@ public class Project implements Serializable {
     private String id;
     @Column(name = "name", nullable = false, unique = true)
     private String name;
-    // ... additional members, often include @OneToMany mappings
-    // Uni-directionale Verbindung von Project zu SourceFile
-    // Da wenn Project geöffnet wird, alle zugehörigen Files laden sollen
-    // nicht aber umgekehrt
-//    @OneToMany(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "project_id")
-//    @OnDelete(action = OnDeleteAction.CASCADE)
-//    private Set<SourceFile> sourcefiles;
+    //add user list assignment to projects
+    //@Column(name = "users")
+    @ElementCollection
+    @CollectionTable(name = "project_project_users", joinColumns = @JoinColumn(name = "id"))
+    @Column(name = "users")
+    private Set<String> users = new HashSet<>();
+    // Uni-directionale Verbindung von Project zu SourceFile, Da wenn Project geöffnet wird, alle zugehörigen Files laden sollen, nicht aber umgekehrt
+    //@OneToMany(cascade = CascadeType.ALL)
+    //@JoinColumn(name = "project_id")
+    //@OnDelete(action = OnDeleteAction.CASCADE)
+    //private Set<SourceFile> sourcefiles;
+    // no-args constructor required by JPA spec, this one is protected since it shouldn't be used directly
+    protected Project() {}
 
-
-    protected Project() {
-// no-args constructor required by JPA spec
-// this one is protected since it shouldn't be used directly
-    }
-
-    public Project(String name) {
+    public Project(String name, Set<String> users) {
         this.name = name;
+        this.users = users;
     }
 
     public String getId() {
@@ -45,6 +46,14 @@ public class Project implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public Set<String> getUsers() {
+        return this.users;
+    }
+
+    public void setUsers(Set<String> users) {
+        this.users = users;
     }
 
     public String getName() {

@@ -24,6 +24,7 @@ export class ProjectListComponent implements OnInit {
    */
   startEdit(id: string): void {
     this.editId = id;
+    console.log(this.projects);
   }
 
   /**
