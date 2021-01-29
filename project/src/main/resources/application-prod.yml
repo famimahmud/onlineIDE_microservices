@@ -1,6 +1,6 @@
 spring:
   application:
-    name: Project-service
+    name: project-service
   profiles:
     active: prod,postgresdb
   datasource:
