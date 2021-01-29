@@ -24,7 +24,11 @@ export class EditorComponent implements OnInit {
 
   // Project params
   projectId: string;
-  projectName: string;
+  project: {
+    id : number;
+    name: string;
+    users: string[];
+  };
 
   // File params
   files: SourceFile[] = [];
@@ -36,6 +40,8 @@ export class EditorComponent implements OnInit {
   isCollapsed = false;
   fileSelected = false;
   editorOptions = {theme: 'vs-light', language: 'c', readOnly: true};
+  isVisible = false;
+  shareUser : string = '';
 
   /**
    * On initialization open the desired project with id projectID
@@ -44,7 +50,7 @@ export class EditorComponent implements OnInit {
     this._route.params.subscribe(params => {
       this.projectId = params['projectId'];
     });
-    this.getProjectName(this.projectId);
+    this.getProject(this.projectId);
     this.getFiles();
   }
 
@@ -52,19 +58,18 @@ export class EditorComponent implements OnInit {
    * Fetch the currently opened project
    * @param id - projectId
    */
-  getProjectName(id : string) {
+  getProject(id : string) {
     // Function to identify project
     function identify(element, index, array) {
       return (array[index].id == id);
     }
 
-    // Fetch project list from server
     this.http.get<Project[]>('/api/projects/all')
       .pipe(
         tap(_ => console.log('fetching project name successful')),
         catchError(this.handleError<Project[]>('getProjects', []))
       ).subscribe(
-      projects => this.projectName = projects.filter(identify)[0].name
+      projects => this.project = projects.filter(identify)[0]
     );
   }
 
@@ -227,8 +232,38 @@ export class EditorComponent implements OnInit {
   }
 
   /**
-   * Function to share the current project with other GitLab users
+   * Cancel the sharing process
    */
-  shareProject(): void { // TODO: implement sharing functionality
+  handleCancel() : void {
+    this.shareUser = '';
+    this.isVisible = false;
+  }
+
+  /**
+   * Share a project with the specified user
+   */
+  handleOk() : void {
+    // add new user to local entity
+    this.project.users.push(this.shareUser);
+
+    // push local project entity to project service
+    this.http.put('/projects', this.project, {responseType: "json"}).pipe(
+      tap(_ => console.log(`updated project`)),
+      catchError(this.handleError<any>('updateProjects'))
+    ).subscribe();
+
+    // pull server project entity to ensure backend persistence (i.e. shared user was rejected)
+    this.getProject(this.projectId);
+
+    // reset user functionality
+    this.shareUser = '';
+    this.isVisible = false;
+  }
+
+  /**
+   * Open sharing dialog
+   */
+  showModal() : void {
+    this.isVisible = true;
   }
 }

@@ -15,7 +15,9 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import javax.sql.DataSource;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Configuration
 @Profile("dev")
@@ -26,7 +28,13 @@ public class ProjectService {
     private ProjectRepository projectRepository;
 
     public Project createProject(String name) {
-        Project project = new Project(name);
+
+        // TODO: project service needs to know the currently active user
+        Set<String> users = new HashSet<String>();
+        users.add("ga99abc");
+
+        // create a new project
+        Project project = new Project(name, users);
         projectRepository.save(project);
         return project;
     }
@@ -56,9 +64,8 @@ public class ProjectService {
 
         // potentially duplicate name. TODO: check error handling here
         projectToUpdate.setName(project.getName());
-
+        projectToUpdate.setUsers(project.getUsers());
         projectRepository.save(projectToUpdate);
-
         return projectToUpdate;
     }
 
