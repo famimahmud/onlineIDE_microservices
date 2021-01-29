@@ -5,7 +5,7 @@
       <i nz-icon nzType="logout" nzTheme="outline"></i>
     </button>
     <ul nz-menu nzTheme="dark" nzMode="inline" style="list-style: none;" >
-      <li nz-submenu nzTitle="{{projectName}}" nzIcon="project" nzOpen="true">
+      <li nz-submenu nzTitle="{{project.name}}" nzIcon="project" nzOpen="true">
         <ul *ngFor="let file of files" style="list-style: none;">
           <li nz-menu-item (click)="loadFile(file.id)">
             <i nz-icon nzType="file"></i>
@@ -16,16 +16,18 @@
     </ul>
     <input type="text" nz-input placeholder="input file name" [(ngModel)]="new_filename" />
     <br>
-    <button style="margin-top: 0px" (click)="newFile()" nz-button nzType="primary" nzShape="round">New File</button>
+    <button style="margin-top: 0px; margin-bottom: 16px;" (click)="newFile()" nz-button nzType="primary" nzShape="round">New File</button>
     <br>
-    <button style="margin-top: 16px" nz-button nzType="default" nzShape="circle">
-      <i nz-icon nzType="user" nzTheme="outline">m</i>
-    </button>
-    <button style="margin-left: 5px; margin-top: 16px" nz-button nzType="default" nzShape="circle">
-      <i nz-icon nzType="user" nzTheme="outline">o</i>
-    </button>
+    <button style="margin-top: 0px; margin-bottom: 7px;" nz-button nzType="primary" nzShape="round" (click)="showModal()"><span>Share Project</span></button>
+    <nz-modal [(nzVisible)]="isVisible" nzTitle="Share Project" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+      <ng-container *nzModalContent>
+        <input type="text" nz-input placeholder="input user name" [(ngModel)]="shareUser" />
+      </ng-container>
+    </nz-modal>
+    <ul *ngFor="let user of project.users" style="list-style: none; margin-bottom: 7px; margin-left: 1px; margin-right: 1px;">
+      <nz-avatar nzText="{{user}}" nzSize="large" style="vertical-align: middle; " [nzGap]="4" [ngStyle]="{'background-color': '#00a2ae'}"></nz-avatar>
+    </ul>
     <br>
-    <button style="margin-top: 0px" (click)="shareProject()" nz-button nzType="primary" nzShape="round">Share Project</button>
   </nz-sider>
   <nz-layout>
     <nz-content>

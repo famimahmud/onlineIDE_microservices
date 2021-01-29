@@ -31,7 +31,7 @@
             <input [hidden]="editId !== data.id" type="text" nz-input [(ngModel)]="data.name" (blur)="stopEdit()" />
           </td>
           <td>{{ data.id }}</td>
-          <td> 1 </td>
+          <td> {{ data.users }} </td>
           <td>
             <a [routerLink]="['/editor', data.id]" nz-button nzType="link">Open</a>
             <a nz-popconfirm nzPopconfirmTitle="Sure to delete?" (nzOnConfirm)="deleteRow(data.id)">Delete</a>
