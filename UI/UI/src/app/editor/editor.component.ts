@@ -124,7 +124,7 @@ export class EditorComponent implements OnInit {
     // generate new file
     const new_file = {
       name: this.new_filename,
-      sourceCode : 'function x() {\n\tconsole.log("Hello world!");\n}',
+      sourceCode : '#include<stdio.h>\n\nint main() {\n\tprintf("Hello World\\n");\n\treturn 0;\n}\n'
     }
     this.new_filename = '';
 
@@ -247,7 +247,7 @@ export class EditorComponent implements OnInit {
     this.project.users.push(this.shareUser);
 
     // push local project entity to project service
-    this.http.put('/projects', this.project, {responseType: "json"}).pipe(
+    this.http.put('/api/projects', this.project, {responseType: "json"}).pipe(
       tap(_ => console.log(`updated project`)),
       catchError(this.handleError<any>('updateProjects'))
     ).subscribe();
