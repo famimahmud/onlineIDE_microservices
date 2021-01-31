@@ -10,8 +10,10 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 
 @SpringBootApplication
@@ -33,5 +35,19 @@ public class ApiGatewayApplication {
 					.noneMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ANONYMOUS"));
 		}
 		return false;
+	}
+
+	@RequestMapping(value = "/username", method = RequestMethod.GET)
+	public String currentUserName(HttpServletRequest request) {
+
+
+		return "hello";
+	}
+
+	@RequestMapping(value = "/user_exists", method = RequestMethod.GET)
+	public Boolean userExists(HttpServletRequest request) {
+
+
+		return true;
 	}
 }
