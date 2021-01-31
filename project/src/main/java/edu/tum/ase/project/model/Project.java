@@ -22,16 +22,23 @@ public class Project implements Serializable {
     @Column(name = "name", nullable = false, unique = true)
     private String name;
     //add user list assignment to projects
-    //@Column(name = "users")
     @ElementCollection
-    @CollectionTable(name = "project_project_users", joinColumns = @JoinColumn(name = "id"))
+//    @OnDelete( action = OnDeleteAction.CASCADE )
+    @CollectionTable(name = "project_users", joinColumns = @JoinColumn(name = "id") )
+    @MapKeyColumn(name = "id")
     @Column(name = "users")
-    private Set<String> users = new HashSet<>();
+    @OrderColumn
+    private Set<String> users = new HashSet();
+//    @Column(name = "users")
+//    private Set<String> users = new HashSet<>();
+
+
+
     // Uni-directionale Verbindung von Project zu SourceFile, Da wenn Project geöffnet wird, alle zugehörigen Files laden sollen, nicht aber umgekehrt
     //@OneToMany(cascade = CascadeType.ALL)
     //@JoinColumn(name = "project_id")
     //@OnDelete(action = OnDeleteAction.CASCADE)
-    //private Set<SourceFile> sourcefiles;
+//    private Set<SourceFile> sourcefiles;
     // no-args constructor required by JPA spec, this one is protected since it shouldn't be used directly
     protected Project() {}
 

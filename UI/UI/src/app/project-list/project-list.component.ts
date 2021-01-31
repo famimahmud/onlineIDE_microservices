@@ -69,16 +69,16 @@ export class ProjectListComponent implements OnInit {
 
   /**
    * Delete a project from the database and frontend
-   * @param id
+   *
    */
   deleteRow(id: number): void {
     // Re-load projects list from backend for stability
     this.getProjects();
 
     // Delete project
-    this.http.delete('/api/projects/${id}', {responseType: "text"}).pipe(
+    this.http.delete(`/api/projects/${id}`, {responseType: "text"}).pipe(
       tap(_ => console.log(`deleted project id=${id}`)),
-      catchError(this.handleError<number>('deleteProject'))
+      catchError(this.handleError<number>(`deleteProject`))
     ).subscribe();
 
     // Update the project list
