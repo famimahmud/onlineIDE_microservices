@@ -4,9 +4,13 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import edu.tum.ase.project.model.Project;
 import edu.tum.ase.project.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -19,6 +23,9 @@ public class ProjectController {
     // Projekt erstellen
     @RequestMapping(path = "/api/projects", method = RequestMethod.POST)
     public Project createProject(@RequestBody String name) throws IOException {
+        //For Debugging
+        SecurityContext securityContext = SecurityContextHolder.getContext();
+        Principal current = securityContext.getAuthentication();
         return projectService.createProject(name);
     }
     /*

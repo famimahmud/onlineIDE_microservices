@@ -34,7 +34,7 @@ zuul:
       path: "/api/projects/**"
       service-id: project-service
       strip-prefix: false
-      sensitiveHeaders: Cookie,Set-Cookie # Authentication
+      sensitiveHeaders: Cookie,Set-Cookie #Authentication
     ui-service:
       path: "/ui/**"
       service-id: ui-service

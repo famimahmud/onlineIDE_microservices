@@ -14,12 +14,14 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 
 import javax.sql.DataSource;
 import java.util.List;
 
 @SpringBootApplication
 @EnableEurekaClient
+@EnableResourceServer
 public class ProjectApplication implements CommandLineRunner {
     private static final Logger log = LoggerFactory.getLogger(ProjectApplication.class);
 
