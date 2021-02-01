@@ -11,10 +11,8 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 
 @SpringBootApplication
@@ -37,6 +35,7 @@ public class ApiGatewayApplication {
 		}
 		return false;
 	}
+<<<<<<< HEAD
 
 	@RequestMapping(value = "/username", method = RequestMethod.GET)
 	public String currentUserName(HttpServletRequest request) {
@@ -49,4 +48,6 @@ public class ApiGatewayApplication {
 
 		return true;
 	}
+=======
+>>>>>>> fdffe24e1ac09f39503fc12e9d1ae037647c9e79
 }
