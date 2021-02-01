@@ -7,6 +7,13 @@ stages:
     - test
     - package
 
+# Build job service-registry
+build_service_registry:
+    stage: build
+    script:
+        - cd service-registry
+        - mvn clean compile
+
 # Build job compiler
 build_compiler:
     stage: build
@@ -28,6 +35,13 @@ build_ui:
         - cd UI
         - mvn clean compile
 
+# Build job api-gateway
+build_ui:
+    stage: build
+    script:
+        - cd api-gateway
+        - mvn clean compile
+
 # Build UI/UI (Angular)
 build_ui_angular:
 
@@ -38,21 +52,6 @@ build_ui_angular:
         - npm ci
     script:
         - ng build
-
-# Build job api-gateway
-build_ui:
-    stage: build
-    script:
-        - cd api-gateway
-        - mvn clean compile
-
-# Build job service-registry
-build_ui:
-    stage: build
-    script:
-        - cd service-registry
-        - mvn clean compile
-
 
 
 # Test job compiler
