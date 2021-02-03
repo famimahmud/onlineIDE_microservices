@@ -35,19 +35,5 @@ public class ApiGatewayApplication {
 		}
 		return false;
 	}
-<<<<<<< HEAD
 
-	@RequestMapping(value = "/username", method = RequestMethod.GET)
-	public String currentUserName(HttpServletRequest request) {
-		return "hello";
-	}
-
-	@RequestMapping(value = "/user_exists", method = RequestMethod.GET)
-	public Boolean userExists(HttpServletRequest request) {
-
-
-		return true;
-	}
-=======
->>>>>>> fdffe24e1ac09f39503fc12e9d1ae037647c9e79
 }

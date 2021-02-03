@@ -1,6 +1,5 @@
 package edu.tum.ase.project.controller;
 
-import edu.tum.ase.project.model.Project;
 import edu.tum.ase.project.model.SourceFile;
 import edu.tum.ase.project.service.SourceFileService;
 import org.springframework.beans.factory.annotation.Autowired;
