@@ -6,6 +6,8 @@ stages:
     - build
     - test
     - package
+    - publish
+    - deploy
 
 # Build job service-registry
 build_service_registry:
@@ -61,6 +63,21 @@ test_compiler:
         - cd compiler
         - mvn test
 
+project-service:test:
+    stage: test
+    script:
+        - cd project
+        - mvn test
+    services:
+        - postgres:9.6
+    variables:
+        url: jdbc:postgresql://db:5432/my_db?user=admin&password=test
+        POSTGRES_DB: my_db
+        POSTGRES_PASSWORD: test
+        POSTGRES_USER: admin
+    only:
+        changes:
+            - project/**/*
 
 # Package jobs
 package_compiler:
@@ -68,6 +85,9 @@ package_compiler:
     script:
         - cd compiler 
         - mvn package
+    artifacts:
+        paths:
+            - compiler/target/*.jar
     variables:
         MAVEN_OPTS: "-DskipTests=true"
 
@@ -76,6 +96,9 @@ package_project:
     script:
         - cd project 
         - mvn package
+    artifacts:
+        paths:
+            - project/target/*.jar
     variables:
         MAVEN_OPTS: "-DskipTests=true"
 
@@ -84,6 +107,9 @@ package_ui:
     script:
         - cd UI 
         - mvn package
+    artifacts:
+        paths:
+            - ui/target/*.jar
     variables:
         MAVEN_OPTS: "-DskipTests=true"
 
@@ -92,6 +118,9 @@ package_api-gateway:
     script:
         - cd api-gateway 
         - mvn package
+    artifacts:
+        paths:
+            - api-gateway/target/*.jar
     variables:
         MAVEN_OPTS: "-DskipTests=true"
 
@@ -100,7 +129,104 @@ package_service-registry:
     script:
         - cd service-registry
         - mvn package
+    artifacts:
+        paths:
+            - service-registry/target/*.jar
     variables:
         MAVEN_OPTS: "-DskipTests=true"
 
+# publish jobs
+service-registry:publish:
+    stage: publish
+    image: docker:stable
+    services:
+        - docker:18-dind
+    script:
+        - cd service-registry/
+        - docker login -u $CI_REGSITRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+        - docker pull $IMAGE_NAME:latest || true
+        - docker build --tag $IMAGE_NAME:latest .
+        - docker push $IMAGE_NAME:latest
+    variables:
+        DOCKER_DRIVER: overlay2
+        DOCKER_HOST: tcp://docker:2375
+        IMAGE_NAME: $CI_REGISTRY_IMAGE/discovery-service
+    only:
+        changes:
+            - service-registry/**/*
 
+api-gateway:publish:
+    stage: publish
+    image: docker:stable
+    services:
+        - docker:18-dind
+    script:
+        - cd api-gateway/
+        - docker login -u $CI_REGSITRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+        - docker pull $IMAGE_NAME:latest || true
+        - docker build --tag $IMAGE_NAME:latest .
+        - docker push $IMAGE_NAME:latest
+    variables:
+        DOCKER_DRIVER: overlay2
+        DOCKER_HOST: tcp://docker:2375
+        IMAGE_NAME: $CI_REGISTRY_IMAGE/api-gateway-service
+    only:
+        changes:
+            - api-gateway/**/*
+
+project-service:publish:
+    stage: publish
+    image: docker:stable
+    services:
+        - docker:18-dind
+    script:
+        - cd project/
+        - docker login -u $CI_REGSITRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+        - docker pull $IMAGE_NAME:latest || true
+        - docker build --tag $IMAGE_NAME:latest .
+        - docker push $IMAGE_NAME:latest
+    variables:
+        DOCKER_DRIVER: overlay2
+        DOCKER_HOST: tcp://docker:2375
+        IMAGE_NAME: $CI_REGISTRY_IMAGE/project-service
+    only:
+        changes:
+            - project/**/*
+
+ui-service:publish:
+    stage: publish
+    image: docker:stable
+    services:
+        - docker:18-dind
+    script:
+        - cd ui/
+        - docker login -u $CI_REGSITRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+        - docker pull $IMAGE_NAME:latest || true
+        - docker build --tag $IMAGE_NAME:latest .
+        - docker push $IMAGE_NAME:latest
+    variables:
+        DOCKER_DRIVER: overlay2
+        DOCKER_HOST: tcp://docker:2375
+        IMAGE_NAME: $CI_REGISTRY_IMAGE/ui-service
+    only:
+        changes:
+            - ui/**/*
+
+compiler-service:publish:
+    stage: publish
+    image: docker:stable
+    services:
+        - docker:18-dind
+    script:
+        - cd compiler/
+        - docker login -u $CI_REGSITRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+        - docker pull $IMAGE_NAME:latest || true
+        - docker build --tag $IMAGE_NAME:latest .
+        - docker push $IMAGE_NAME:latest
+    variables:
+        DOCKER_DRIVER: overlay2
+        DOCKER_HOST: tcp://docker:2375
+        IMAGE_NAME: $CI_REGISTRY_IMAGE/compiler-service
+    only:
+        changes:
+            - compiler/**/*
