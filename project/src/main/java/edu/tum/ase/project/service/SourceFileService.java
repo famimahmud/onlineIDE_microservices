@@ -5,17 +5,14 @@ import edu.tum.ase.project.model.SourceFile;
 import edu.tum.ase.project.repository.ProjectRepository;
 import edu.tum.ase.project.repository.SourceFileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 
 import java.util.List;
-import java.util.Optional;
 
 @Configuration
-@Profile("dev")
+//@Profile("dev")
 @Service
 public class SourceFileService {
 

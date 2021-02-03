@@ -1,15 +1,12 @@
 package edu.tum.ase.project.controller;
 
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import edu.tum.ase.project.model.Project;
 import edu.tum.ase.project.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @RestController
 public class ProjectController {
@@ -20,21 +17,6 @@ public class ProjectController {
     @RequestMapping(path = "/api/projects", method = RequestMethod.POST)
     public Project createProject(@RequestBody String name) throws IOException {
         return projectService.createProject(name);
-    }
-    /*
-    TODO: delete if obsolete -> option to receive current user from UI - UI needs to be informed who is using it then
-    @RequestMapping(path = "/projects", method = RequestMethod.POST)
-    public Project createProject(@RequestBody ObjectNode body) throws IOException {
-        Set<String> users = new HashSet<>();
-        users.add(body.get("users").asText());
-        System.out.println(body.get("users").asText());
-        return projectService.createProject(body.get("name").asText(), users);
-    }*/
-
-    // Projekt löschen mit Namen
-    @RequestMapping(path = "/api/projectsByName", method = RequestMethod.DELETE)
-    public Project deleteProjectByName(@RequestBody String name) throws IOException {
-        return projectService.deleteProjectByName(name);
     }
 
     // Projekt löschen
@@ -55,9 +37,4 @@ public class ProjectController {
         return projectService.getProjects();
     }
 
-    // get Project by name
-    @RequestMapping(path = "/api/projects", method = RequestMethod.GET)
-    public Project findProjectByName(@RequestBody String name) throws IOException {
-        return projectService.findByName(name);
-    }
 }
