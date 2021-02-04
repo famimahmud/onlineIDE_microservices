@@ -36,7 +36,7 @@ build_service_registry:
     script:
         - cd service-registry
         - mvn clean compile
-        - echo $CI_REGISTRY_USER
+        - echo $CI_REGISTRY_IMAGE
 
 # Build job compiler
 build_compiler:
@@ -269,7 +269,7 @@ deploy:gcp:
 
         - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
         - scp -r docker-compose.prod.yml $SSH_HOST:~/
-        - ssh $SSH_HOST "sudo docker login --username $CI_REGSITRY_USER --password $CI_REGISTRY_PASSWORD $CI_REGISTRY"
+        - ssh $SSH_HOST "sudo docker login --username $CI_REGISTRY_USER --password $CI_REGISTRY_PASSWORD $CI_REGISTRY"
         - ssh $SSH_HOST "sudo docker-compose -f docker-compose.prod.yml pull && sudo docker-compose -f docker-compose.prod.yml up"  --force-recreate
     
     variables:
