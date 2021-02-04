@@ -124,6 +124,9 @@ package_compiler:
             - compiler/target/*.jar
     variables:
         MAVEN_OPTS: "-DskipTests=true"
+    only:
+        changes:
+            -compiler/*+/*
 
 package_project:
     stage: package
@@ -135,6 +138,9 @@ package_project:
             - project/target/*.jar
     variables:
         MAVEN_OPTS: "-DskipTests=true"
+    only:
+        changes:
+            - project/**/*
 
 package_ui:
     stage: package
@@ -146,6 +152,9 @@ package_ui:
             - UI/target/*.jar
     variables:
         MAVEN_OPTS: "-DskipTests=true"
+    only:
+        changes:
+            - UI/**/*
 
 package_api-gateway:
     stage: package
@@ -157,6 +166,9 @@ package_api-gateway:
             - api-gateway/target/*.jar
     variables:
         MAVEN_OPTS: "-DskipTests=true"
+    only:
+        changes:
+            - api-gateway/**/*
 
 package_service-registry:
     stage: package
@@ -168,6 +180,9 @@ package_service-registry:
             - service-registry/target/*.jar
     variables:
         MAVEN_OPTS: "-DskipTests=true"
+    only:
+        changes:
+            - service-registry/**/*
 
 # publish jobs
 service-registry:publish:
