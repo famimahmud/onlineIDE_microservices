@@ -11,7 +11,7 @@ services:
     environment:
       - EUREKA_SERVER=http://discovery-service:8761/eureka
     ports:
-      - 443:443
+      - 80:80
 
   compiler-service:
     image: gitlab.lrz.de:5005/ase20-group1-7/onlineide/compiler-service
