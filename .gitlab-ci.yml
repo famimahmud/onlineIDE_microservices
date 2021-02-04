@@ -164,7 +164,7 @@ service-registry:publish:
         - docker:18-dind
     script:
         - cd service-registry/
-        - docker login –u $CI_REGSITRY_USER –p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+        - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
         - docker pull $IMAGE_NAME:latest || true
         - docker build --tag $IMAGE_NAME:latest .
         - docker push $IMAGE_NAME:latest
@@ -183,7 +183,7 @@ api-gateway:publish:
         - docker:18-dind
     script:
         - cd api-gateway/
-        - docker login –u $CI_REGSITRY_USER –p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+        - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
         - docker pull $IMAGE_NAME:latest || true
         - docker build --tag $IMAGE_NAME:latest .
         - docker push $IMAGE_NAME:latest
@@ -202,7 +202,7 @@ project-service:publish:
         - docker:18-dind
     script:
         - cd project/
-        - docker login –u $CI_REGSITRY_USER –p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+        - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
         - docker pull $IMAGE_NAME:latest || true
         - docker build --tag $IMAGE_NAME:latest .
         - docker push $IMAGE_NAME:latest
@@ -221,7 +221,7 @@ ui-service:publish:
         - docker:18-dind
     script:
         - cd ui/
-        - docker login –u $CI_REGSITRY_USER –p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+        - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
         - docker pull $IMAGE_NAME:latest || true
         - docker build --tag $IMAGE_NAME:latest .
         - docker push $IMAGE_NAME:latest
@@ -240,7 +240,7 @@ compiler-service:publish:
         - docker:18-dind
     script:
         - cd compiler/
-        - docker login –u $CI_REGSITRY_USER –p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+        - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
         - docker pull $IMAGE_NAME:latest || true
         - docker build --tag $IMAGE_NAME:latest .
         - docker push $IMAGE_NAME:latest
