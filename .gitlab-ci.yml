@@ -36,14 +36,15 @@ build_service_registry:
     script:
         - cd service-registry
         - mvn clean compile
-        - echo $CI_REGISTRY_IMAGE
-
+    only:
+        changes:
+            - service-registry/**/*
 # Build job compiler
 build_compiler:
     stage: build
     script:
         - cd compiler
-        - mvn clean compile
+        - mvn clean compile    
 
 # Build job project
 build_project:
@@ -51,6 +52,9 @@ build_project:
     script:
         - cd project
         - mvn clean compile
+    only:
+        changes:
+            - project/**/*
 
 # Build job ui
 build_ui:
@@ -65,7 +69,9 @@ build_api_gateway:
     script:
         - cd api-gateway
         - mvn clean compile
-
+    only:
+        changes:
+            - api-gateway/**/*
 # Build UI/UI (Angular)
 build_ui_angular:
 
@@ -76,7 +82,6 @@ build_ui_angular:
         - npm ci
     script:
         - ng build
-
 
 # Test job compiler
 test_compiler:
@@ -131,7 +136,7 @@ package_ui:
         - mvn package
     artifacts:
         paths:
-            - ui/target/*.jar
+            - UI/target/*.jar
     variables:
         MAVEN_OPTS: "-DskipTests=true"
 
@@ -221,7 +226,7 @@ ui-service:publish:
     services:
         - docker:18-dind
     script:
-        - cd ui/
+        - cd UI/
         - docker login --username $CI_REGISTRY_USER --password $CI_REGISTRY_PASSWORD $CI_REGISTRY
         - docker pull $IMAGE_NAME:latest || true
         - docker build --tag $IMAGE_NAME:latest .
