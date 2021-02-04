@@ -1,6 +1,13 @@
 #This template uses jdk8 for veryfying and deplyoing images
 image: maven:3.3.9-jdk-8
 
+#get back to root before and after script 
+before_script:
+    - cd $CI_PROJECT_DIR
+
+after_script:
+    - cd $CI_PROJECT_DIR
+
 # Stages
 stages: 
     - build
@@ -230,3 +237,28 @@ compiler-service:publish:
     only:
         changes:
             - compiler/**/*
+
+
+# deploy job
+deploy:gcp:
+    stage: deploy
+    image: ubuntu:18.04
+    script: 
+        #Install ssh agent
+        - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-cleint -y )'
+        - eval $(ssh-agent -s)
+        - mkdir -p ~/.ssh
+        - chmod 700 ~/.ssh
+        
+        - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+
+        - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+        - scp -r docker-compose.prod.yml $SSH_HOST:~/
+        - ssh $SSH_HOST "sudo docker login --username $CI_REGSITRY_USER --password $CI_REGISTRY_PASSWORD $CI_REGISTRY"
+        - ssh $SSH_HOST "sudo docker-compose -f docker-compose.prod.yml pull && sudo docker-compose -f docker-compose.prod.yml up"  --force-recreate
+    
+    variables:
+        SSH_HOST: malteradmann@34.69.193.177
+    only:
+        refs:
+            - master    
