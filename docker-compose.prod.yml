@@ -1,0 +1,49 @@
+version: "3.7"
+services:
+  discovery-service:
+    image: gitlab.lrz.de:5005/ase20-group1-7/onlineide/discovery-service
+    restart: on-failure
+    ports:
+      - 8761:8761
+  api-gateway-service:
+    image: gitlab.lrz.de:5005/ase20-group1-7/onlineide/api-gateway-service
+    restart: on-failure
+    environment:
+      - EUREKA_SERVER=http://discovery-service:8761/eureka
+    ports:
+      - 8080:8080
+
+  compiler-service:
+    image: gitlab.lrz.de:5005/ase20-group1-7/onlineide/compiler-service
+    restart: on-failure
+    environment:
+      - EUREKA_SERVER=http://discovery-service:8761/eureka
+    ports:
+      - 8082:8082
+
+  project-service:
+    image: gitlab.lrz.de:5005/ase20-group1-7/onlineide/project-service
+    restart: on-failure
+    depends_on:
+      - db
+    environment:
+      - url=jdbc:postgresql://db:5432/my_db?user=admin&password=test
+      - EUREKA_SERVER=http://discovery-service:8761/eureka
+    ports:
+      - 8081:8081
+
+  db:
+    image: postgres:9.6
+    environment:
+      - POSTGRES_DB=my_db
+      - POSTGRES_PASSWORD=test
+      - POSTGRES_USER=admin
+
+  ui-service:
+    image: gitlab.lrz.de:5005/ase20-group1-7/onlineide/ui-service
+    restart: on-failure
+    environment:
+      - EUREKA_SERVER=http://discovery-service:8761/eureka
+    ports:
+      - 8084:8084
+
