@@ -11,6 +11,11 @@ variables:
   # `installAtEnd` and `deployAtEnd` are only effective with recent version of the corresponding plugins.
   MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version -DinstallAtEnd=true -DdeployAtEnd=true"
 #get back to root before and after script 
+
+
+cache:
+    paths:
+        - .m2/repository
 before_script:
     - cd $CI_PROJECT_DIR
 
