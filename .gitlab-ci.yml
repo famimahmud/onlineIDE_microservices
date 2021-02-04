@@ -96,7 +96,9 @@ test_compiler:
     script:
         - cd compiler
         - mvn test
-
+    only:
+      changes:
+        - compiler/**/*
 project-service:test:
     stage: test
     script:

@@ -17,7 +17,7 @@ services:
     environment:
       - EUREKA_SERVER=http://discovery-service:8761/eureka
     ports:
-    - 8080:8080
+    - 80:80
 
   compiler-service:
     build:
