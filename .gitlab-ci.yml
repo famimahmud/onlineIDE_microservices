@@ -128,7 +128,7 @@ package_compiler:
         MAVEN_OPTS: "-DskipTests=true"
     only:
         changes:
-            - compiler/*+/*
+            - compiler/**/*
 
 package_project:
     stage: package
