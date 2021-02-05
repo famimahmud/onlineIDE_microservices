@@ -20,19 +20,20 @@ export class EditorComponent implements OnInit {
     private http: HttpClient,
     private message: NzMessageService,
     public authService: AuthService
-  ) { }
+  ) {
+  }
 
   // Project params
   projectId: string;
   project: {
-    id : number;
+    id: number;
     name: string;
     users: string[];
   };
 
   // File params
   files: SourceFile[] = [];
-  selected_file : SourceFile = new SourceFile(0, '', '');
+  selected_file: SourceFile = new SourceFile(0, '', '');
   new_filename: string = '';
   compiler_out: string = '';
 
@@ -41,7 +42,7 @@ export class EditorComponent implements OnInit {
   fileSelected = false;
   editorOptions = {theme: 'vs-light', language: 'c', readOnly: true};
   isVisible = false;
-  shareUser : string = '';
+  shareUser: string = '';
 
   /**
    * On initialization open the desired project with id projectID
@@ -58,7 +59,7 @@ export class EditorComponent implements OnInit {
    * Fetch the currently opened project
    * @param id - projectId
    */
-  getProject(id : string) {
+  getProject(id: string) {
     // Function to identify project
     function identify(element, index, array) {
       return (array[index].id == id);
@@ -76,7 +77,7 @@ export class EditorComponent implements OnInit {
   /**
    * Fetch all files from the server
    */
-  getFiles() : void{
+  getFiles(): void {
     this.http.get<SourceFile[]>(`/api/projects/${this.projectId}/source_files`)
       .pipe(
         tap(_ => console.log('fetching source files successful')),
@@ -108,12 +109,12 @@ export class EditorComponent implements OnInit {
    */
   newFile(): void {
     // optionally generate standard name
-    if (this.new_filename == ''){
+    if (this.new_filename == '') {
       // check for duplicate names
       this.getFiles();
       let i = 0;
-      for(let j = 0; j<this.files.length; j++){
-        if (this.files[j].name.indexOf('file_' + i + '.c') > -1){
+      for (let j = 0; j < this.files.length; j++) {
+        if (this.files[j].name.indexOf('file_' + i + '.c') > -1) {
           i++;
           j = -1;
         }
@@ -121,11 +122,35 @@ export class EditorComponent implements OnInit {
       this.new_filename = 'file_' + i + '.c';
     }
 
+    const index = this.new_filename.lastIndexOf('.');
+    let language = '';
+    if (index > 0) {
+      language = this.new_filename.substring(index + 1);
+    }
+    const name = this.new_filename.substring(0, index);
+    let sourceC = '';
+    if (language === 'c') {
+      sourceC = '#include<stdio.h>\n' +
+        '\n' +
+        'int main() {\n' +
+        '\tprintf("Hello World\\n");\n' +
+        '\treturn 0;\n' +
+        '}';
+    } else if (language === 'java') {
+      sourceC = 'public class ' + name + ' {\n' +
+        '    public static void main(String[] args) {\n' +
+        '        System.out.println("Hello, World!");\n' +
+        '    }\n' +
+        '}';
+    } else {
+       sourceC = 'This language is not supported!';
+    }
+
     // generate new file
     const new_file = {
       name: this.new_filename,
-      sourceCode : '#include<stdio.h>\n\nint main() {\n\tprintf("Hello World\\n");\n\treturn 0;\n}\n'
-    }
+      sourceCode: sourceC
+    };
     this.new_filename = '';
 
     // add file to backend and reload frontend list
@@ -154,13 +179,17 @@ export class EditorComponent implements OnInit {
     this.fileSelected = true;
 
     // change syntax highlighting for the respective language
-    this.editorOptions = {...this.editorOptions, language: this.selected_file.name.split('.')[1], readOnly: !this.fileSelected};
+    this.editorOptions = {
+      ...this.editorOptions,
+      language: this.selected_file.name.split('.')[1],
+      readOnly: !this.fileSelected
+    };
   }
 
   /**
    * Delete a specified file from the project
    */
-  deleteFile() : void {
+  deleteFile(): void {
     // Re-load file list from backend for stability
     this.getFiles();
 
@@ -169,7 +198,7 @@ export class EditorComponent implements OnInit {
       tap(_ => console.log(`deleted file id ${_}`)),
       catchError(this.handleError<number>('deleteFile'))
     ).subscribe();
-    this.message.create('success','File ' + this.selected_file.name + ' deleted!');
+    this.message.create('success', 'File ' + this.selected_file.name + ' deleted!');
 
     // Update the file list and selected
     this.selected_file = new SourceFile(0, '', '');
@@ -181,7 +210,7 @@ export class EditorComponent implements OnInit {
   /**
    * Save a file to the persisted database
    */
-  saveFile(): void{
+  saveFile(): void {
     // Send update request to database
     this.http.put(`/api/projects/${this.projectId}/source_files`, this.selected_file, {responseType: "json"}).pipe(
       tap(_ => console.log(`saved file id=${this.selected_file.id}`)),
@@ -199,7 +228,7 @@ export class EditorComponent implements OnInit {
 
     // Notify user about compiling
     this.compiler_out = '';
-    const id = this.message.loading('Compiling ' + this.selected_file.name + '...', { nzDuration: 0 }).messageId;
+    const id = this.message.loading('Compiling ' + this.selected_file.name + '...', {nzDuration: 0}).messageId;
     setTimeout(() => {
       this.message.remove(id);
     }, 1250);
@@ -223,10 +252,9 @@ export class EditorComponent implements OnInit {
    * Switch between light and dark colored editor
    */
   darkMode() { // TODO: Add microcontroller support
-    if(this.editorOptions.theme == 'vs-light') {
+    if (this.editorOptions.theme == 'vs-light') {
       this.editorOptions = {...this.editorOptions, theme: 'vs-dark'};
-    }
-    else {
+    } else {
       this.editorOptions = {...this.editorOptions, theme: 'vs-light'};
     }
   }
@@ -234,7 +262,7 @@ export class EditorComponent implements OnInit {
   /**
    * Cancel the sharing process
    */
-  handleCancel() : void {
+  handleCancel(): void {
     this.shareUser = '';
     this.isVisible = false;
   }
@@ -242,7 +270,7 @@ export class EditorComponent implements OnInit {
   /**
    * Share a project with the specified user
    */
-  handleOk() : void {
+  handleOk(): void {
     // add new user to local entity
     this.project.users.push(this.shareUser);
 
@@ -263,7 +291,7 @@ export class EditorComponent implements OnInit {
   /**
    * Open sharing dialog
    */
-  showModal() : void {
+  showModal(): void {
     this.isVisible = true;
   }
 }

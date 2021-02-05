@@ -56,7 +56,7 @@ public class CompilerService {
             }
             if (!error) {
                 sourceCode.setCompilable(true);
-                sourceCode.setStdout("Compilation was successful!\n");
+                sourceCode.setStdout("Compilation was successful! " + System.lineSeparator());
                 sourceCode.setStderr("");
             } else {
                 sourceCode.setStderr(stderr);
@@ -71,12 +71,12 @@ public class CompilerService {
                 String output2 = "";
                 String line = null;
                 while ((line = output.readLine()) != null) {
-                    output2 += line + "\n";
+                    output2 += line + System.lineSeparator();
                 }
                 sourceCode.alterStdout(output2);
 
                 String compiledFile = fileName;
-                if (language.equals("java")) {  
+                if (language.equals("java")) {
                     compiledFile = compiledFile.substring(0, compiledFile.length()-4);
                     compiledFile += "class";
                     path += compiledFile;
