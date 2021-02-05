@@ -76,7 +76,7 @@ public class CompilerService {
                 sourceCode.alterStdout(output2);
 
                 String compiledFile = fileName;
-                if (language.equals("java")) {
+                if (language.equals("java")) {  
                     compiledFile = compiledFile.substring(0, compiledFile.length()-4);
                     compiledFile += "class";
                     path += compiledFile;
