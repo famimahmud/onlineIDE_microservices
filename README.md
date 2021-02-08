@@ -11,6 +11,9 @@ Developed for Advanced Topics of Software Engineering (TUM). Implemented by Grou
             -   Redirect URL from Gitlab LRZ will not work as it points to IP of our Google Vm, need to contact Fami Mahmud
         - deploy: run the complete CI/CD pipeline
             -   need to specify where the IDE should be deployed to in the .gitlab.ci yml file, currently specified to deploy to the running Google VM
+
+- Deployed IDE URL: http://34.69.193.177
+
 ## Project Plan
 ![plan](misc/project_plan.png)
 
