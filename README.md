@@ -12,6 +12,7 @@ Developed for Advanced Topics of Software Engineering (TUM). Implemented by Grou
     - deploy: run the complete CI/CD pipeline
         -   need to specify where the IDE should be deployed to in the .gitlab.ci yml file, currently specified to deploy to the running Google VM
 
+
 - Deployed IDE URL: http://34.69.193.177
 
 ## Project Plan
