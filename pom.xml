@@ -12,7 +12,7 @@
         <module>UI</module>
         <module>project</module>
         <module>compiler</module>
-        <module>dark-mode/darkmode</module>
+
 
     </modules>
     <packaging>pom</packaging>
