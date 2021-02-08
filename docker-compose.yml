@@ -28,7 +28,7 @@ services:
     environment:
       - EUREKA_SERVER=http://discovery-service:8761/eureka
     ports:
-    - 8082:8082
+    -  9000-9004:8082
 
   project-service:
     build:
@@ -42,7 +42,7 @@ services:
       - url=jdbc:postgresql://db:5432/my_db?user=admin&password=test
       - EUREKA_SERVER=http://discovery-service:8761/eureka
     ports:
-    - 8081:8081
+    - 9005-9009:8081
 
   db:
     image: postgres:9.6
@@ -59,7 +59,7 @@ services:
     environment:
       - EUREKA_SERVER=http://discovery-service:8761/eureka
     ports:
-    - 8084:8084
+    - 9010-9014:8084
 
 
 
