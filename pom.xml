@@ -9,7 +9,7 @@
     <modules>
         <module>service-registry</module>
         <module>api-gateway</module>
-        <module>ui</module>
+        <module>UI</module>
         <module>project</module>
         <module>compiler</module>
         <module>dark-mode/darkmode</module>
