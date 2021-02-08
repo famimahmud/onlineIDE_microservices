@@ -85,7 +85,7 @@ build_ui_angular:
         - cd UI/UI
         - npm ci
     script:
-        - ng build
+        - ng build  --prod --outputPath=../src/main/resources/static/
     only:
       changes:
         - UI/**/*
