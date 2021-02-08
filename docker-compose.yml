@@ -53,7 +53,7 @@ services:
   ui-service:
     build:
       dockerfile: Dockerfile
-      context: ./ui
+      context: ./UI
     image: ui-service:latest
     restart: on-failure
     environment:
